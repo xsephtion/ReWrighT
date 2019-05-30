@@ -49,7 +49,7 @@
           <div class="container">
             <div class="row">
               <div class="col l6 s12">
-                <h5 class="red-text text-darken-1">ProM: ICS Project Management System</h5>
+                <h5 class="red-text text-darken-1">ReWrighT: Hand and Wrist rehabilitaion system</h5>
                 <p class="red-text text-darken-4">Help me</p>
               </div>
               <div class="col l4 offset-l2 s12">
@@ -65,7 +65,7 @@
           </div>
           <div class="footer-copyright">
             <div class="container red-text text-darken-1">
-            © 2016 ICS ProM: ICS Project Management System
+            © 2019 ReWrighT: Hand and Wrist rehabilitaion system
             <!--a class="grey-text text-lighten-4 right" href="#!">More Links</a-->
             </div>
           </div>
