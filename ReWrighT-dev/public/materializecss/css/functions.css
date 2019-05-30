@@ -1,0 +1,65 @@
+body, html {height:100%;}
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+main {
+	flex: 1 0 auto;
+}
+textarea:focus{
+  border-bottom: 1px solid #b71c1c;
+  -webkit-box-shadow: 0 1px 0 0 #b71c1c;
+  -moz-box-shadow: 0 1px 0 0 #b71c1c;
+  box-shadow: 0 1px 0 0 #b71c1c;
+}
+
+/* label color */
+.input-field label {
+ color: #b71c1c;
+}
+/* label focus color */
+.input-field input[type=text]:focus + label {
+ color: #b71c1c;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus {
+ border-bottom: 1px solid #b71c1c;
+ box-shadow: 0 1px 0 0 #b71c1c;
+}
+/* valid color */
+.input-field input[type=text].valid {
+ border-bottom: 1px solid #b71c1c;
+ box-shadow: 0 1px 0 0 #b71c1c;
+}
+/* invalid color */
+.input-field input[type=text].invalid {
+ border-bottom: 1px solid #b71c1c;
+ box-shadow: 0 1px 0 0 #b71c1c;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+ color: #b71c1c;
+}
+
+#nav-desktop{
+	width:175px;
+}
+
+.votes{
+	position: absolute;
+	top:10px;
+	right:20px;
+}
+
+/*
+    When creating your CSS selector,
+    change "brown" to something of your choosing
+    */
+    .waves-effect.waves-light-blue-accent-4 .waves-ripple {
+     /* The alpha value allows the text and background color
+     of the button to still show through. */
+      background-color: #0091ea;
+
+    }
