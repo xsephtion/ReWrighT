@@ -17,19 +17,15 @@ class userRolesTableSeeder extends Seeder
         DB::table($table)->delete();
         user_roles::create([
     		'type'=>0,
-    		'description'=>'Project Manager'
+    		'description'=>'Admin'
 		]);
 		user_roles::create([
     		'type'=>1,
-    		'description'=>'Team Leader'
+    		'description'=>'Physician'
 		]);
 		user_roles::create([
     		'type'=>2,
-    		'description'=>'Developer'
-		]);
-        user_roles::create([
-    		'type'=>3,
-    		'description'=>'Professor'
+    		'description'=>'Patient'
 		]);
 
     }

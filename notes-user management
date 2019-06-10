@@ -1,0 +1,35 @@
+user management
+
+website admin
+	User creation
+		Physical Therapist
+			hjtejuco (PT)
+
+	Accounts(example)
+		hjtejuco
+			Patients (under)
+
+PT
+	User Creation
+		Patients (give patients "key")
+
+	Data Management
+		Annoucements
+			ALL(no comment)
+		Task (option: real time)
+			Patient
+
+		Progress
+			Patient
+
+		Video (create video)
+			Exercises
+
+Patient
+	Login
+		Profiles (to be filled out by patient on a separate form and filled into the system by PT)
+		Treatment
+		Procedures
+	Device
+
+

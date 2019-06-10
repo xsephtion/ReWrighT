@@ -7,7 +7,7 @@ class usersInfoTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
+     * note: employee and student id must be in another table
      * @return void
      */
     public function run()
