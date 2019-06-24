@@ -18,8 +18,6 @@ class usersInfoTableSeeder extends Seeder
         	"user_id"=>1,
         	"profile"=>'1_profile_1.jpg',
         	"banner"=>'1_banner_1.jpg',
-        	"employee_id"=>NULL,
-        	"student_id"=>'2010-24697',
         	"first_name"=>'Gabriel Luis',
         	"middle_name"=>'Gatmaitan',
         	"last_name"=>'Borjal',

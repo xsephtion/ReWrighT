@@ -330,9 +330,9 @@ function updateGenContent(artcle){
 	var dtls = '<h4>'+ artcle.disc_title +'</h4><h6 class="grey-text text-darken-1">'+' '+ date.toUTCString() +'</h6>';
 		dtls+= '<h6 class="grey-text text-darken-1">Priority:'+ artcle.disc_priority +'</h6>';
 		if(artcle.project_name.length >25){
-			dtls+= '<div class="tags"><div class="chip">'+ artcle.project_name.substr(0,25) +'...</div><div class="chip"><img src="http://' + siteUrl + '/profile/image/t/'+ artcle.profile +'" alt="Contact Person">'+ artcle.first_name +' '+ artcle.last_name +'</div></div>';
+			dtls+= '<div class="tags"><div class="chip">'+ artcle.project_name.substr(0,25) +'...</div><div class="chip"><img src="http://' + siteUrl + '/profile/image/get/t/'+ artcle.profile +'" alt="Contact Person">'+ artcle.first_name +' '+ artcle.last_name +'</div></div>';
 		}else{
-			dtls+= '<div class="tags"><div class="chip">'+ artcle.project_name +'</div><div class="chip"><img src="http://' + siteUrl + '/profile/image/t/'+ artcle.profile +'" alt="Contact Person">'+ artcle.first_name +' '+ artcle.last_name +'</div></div>';
+			dtls+= '<div class="tags"><div class="chip">'+ artcle.project_name +'</div><div class="chip"><img src="http://' + siteUrl + '/profile/image/get/t/'+ artcle.profile +'" alt="Contact Person">'+ artcle.first_name +' '+ artcle.last_name +'</div></div>';
 		}
 	if(details.is(':parent') ){
 		details.empty();
@@ -624,29 +624,7 @@ function notifsRefresh(){
 		}
 	});
 }
-function ajaxSubmitPostings(formId,dataform){
-	var error;
-		$.ajax({
-            url: $(formId).attr('action'),
-            processData: false,
-			contentType: false,
-			mimeType: 'multipart/form-data',
-            type:"POST",
-            data: dataform,
-            
-            success:function(data){
-				return true;
-            },error:function(data){ 
-                error = data.statusText;
-                return false;
-            }
-        });
-    if(error == undefined){
-    	return true;
-    }
-    console.log(error);
-    return false;
-}
+
 function colateText(arr){	
 	var formData = new FormData();
 	
@@ -774,6 +752,7 @@ $(document).ready(function(){
 				    		discussion.priority = data.discussions[i].priority;
 
 				    	if(discussions.length == 0){
+				    		//console.log(discussion);
 				    		discussions.push(discussion);
 				    	}else{
 				    		if(function(){
@@ -854,3 +833,51 @@ $('.joinProj').on('click',function(){
 		}
 	});
 });
+
+function submitActivationForm(){
+	var formId = '#f_activation';
+	var dataform =  new FormData();
+
+	dataform.append('_token',$(formId + ' [name=_token]')[0].value);
+	dataform.append('email',$(formId+' [name=email]')[0].value);
+	
+	var error;
+	$.ajax({
+        url: $(formId).attr('action'),
+        processData: false,
+		contentType: false,
+		mimeType: 'multipart/form-data',
+        type:"POST",
+        data: dataform,
+        
+        success:function(data){
+        	var status = JSON.parse(data).status;
+        	var msg = JSON.parse(data).message;
+        	if(status == "validatorFail"){
+        		
+            	for(var message in msg){            		
+            		var toastContent = "<span>" + msg[message] + "</span>";
+					Materialize.toast(toastContent, 5000, 'red darken-4');
+            	}
+            }else if(status == "fail"){
+            	var toastContent = "<span>" + msg + "</span>";
+				Materialize.toast(toastContent, 5000, 'red darken-4');
+            }else if(status == "success"){
+            	var toastContent = "<span>" + msg + "</span>";
+				Materialize.toast(toastContent, 5000, 'red darken-4');
+				
+				var cur = document.getElementById('codeActivation');
+				addNode(cur,'h1',undefined,undefined,undefined,undefined,undefined,msg);
+				
+            }
+            	
+        	
+        },error:function(data){ 
+            error = data.status;
+        }
+    });
+    if(error == undefined){
+    	return true;
+    }
+    return false;
+}

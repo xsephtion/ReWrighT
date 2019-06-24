@@ -18,8 +18,6 @@ class user_info extends Model
 		'user_id',
 		'profile',
 		'banner',
-		'employee_id',
-		'student_id',
 		'first_name',
 		'middle_name',
 		'last_name',

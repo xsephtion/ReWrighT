@@ -2,7 +2,7 @@
 
 @section('content')
 	
-	<div id='top'></div>
+	
 	<header>
 		<nav class="top-nav grey darken-4" >
 			<a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">dashboard</i></a>			
@@ -19,10 +19,10 @@
 				<li class="no-padding">
 					<a href="discussionBoard" id='db_disc_board' class='boards' data-link="{{ route('discussionBoard') }}" data-token="{{ csrf_token() }}">
 					
-						<i class="material-icons left">question_answer</i> 	Discussions {{-- discussions board --}}
+						<i class="material-icons left">question_answer</i>News {{-- discussions board --}}
 					</a>
 				</li>			
-				<li class="no-padding">
+				<li class="no-padding"><!-- task timeline -->
 					<a href="taskBoard" id='db_task_board' class='boards' data-link="{{ route('taskBoard') }}" data-token="{{ csrf_token() }}">
 						<i class="material-icons left">work</i>	Tasks			{{-- tasks board --}}
 					</a>
@@ -38,28 +38,12 @@
 						<i class="material-icons left">settings</i>	Settings		{{-- Settings --}}
 					</a>
 				</li>
-				<li>
-					<label class="active" for="project">Project</label>
-					<select id="project" class="red-text text-accent-4">
-						<option disabled></option>
-						<!--can improve this part-->
-						@foreach(Auth::user()->projects as $project)
-							@if($project->project->project_id === $project)
-								<option value="{!! $project->project_id!!}" selected>{!! $project->project->text !!}</option>
-							@else
-								<option value="{!! $project->project_id!!}" >{!! $project->project->text !!}</option>
-							@endif
-						@endforeach
-					</select>
-				</li>
-				<li><a href="#joinProject" class="modal-trigger">Join Project <i class="material-icons left">add</i></a></li>
-				@if(Auth::user()->user_type === '1')
-				<li><a href="#createProject" class="modal-trigger">Create Project <i class="material-icons left">library_add</i></a></li>
-				@endif	
+				
+				
 		    </ul>
 		    <ul id="slide-out" class="side-nav">
 				<li><a href="#!"><i class="material-icons left">schedule</i>Timeline</a></li>				{{-- timeline --}}
-				<li><a href="#!"><i class="material-icons left ">question_answer</i>Discussions</a></li>	{{-- discussions board --}}
+				<li><a href="#!"><i class="material-icons left ">question_answer</i>News</a></li>	{{-- discussions board --}}
 				<li><a href="#!"><i class="material-icons left">work</i>Tasks</a></li>						{{-- tasks board --}}
 				<li class="no-padding">																		{{-- Profile --}}
 					<ul class="collapsible collapsible-accordion">
@@ -76,24 +60,7 @@
 					</ul>
 				</li>
 				<li><a href="#m_settings" class="modal-trigger"><i class="material-icons left">settings</i>Settings</a></li>				{{-- Settings --}}
-				<li>
-					<label class="active" for="project">Project</label>
-					<select id="project" class="red-text text-accent-4">
-						<option disabled></option>
-						<!--can improve this part-->
-						@foreach(Auth::user()->projects as $project)
-							@if($project->project->project_id === $project)
-								<option value="{!! $project->project_id!!}" selected>{!! $project->project->text !!}</option>
-							@else
-								<option value="{!! $project->project_id!!}" >{!! $project->project->text !!}</option>
-							@endif
-						@endforeach
-					</select>
-				</li>
-				<li><a href="#joinProject" class="modal-trigger" onclick="getProjects();">Join Project <i class="material-icons left">add</i></a></li>
-				@if(Auth::user()->user_type === '1')
-				<li><a href="#createProject" class="modal-trigger">Create Project <i class="material-icons left">library_add</i></a></li>
-				@endif
+				
 		    </ul>
 		</nav>
 	</header>
@@ -161,92 +128,13 @@
 		</div>
 		<!-- End of General Body -->
 		<!-- Modals -->
-		<div id="joinProject" class="modal modal-fixed-footer">
-			<div class="modal-content">
-			
-			
-			{!! Form::open(['id'=>'availableProjects']) !!}
-			
-				<h4>Join Project</h4>
-				<div id="projects">
-					<ul class="collection">
-					</ul>
-				</div> 
-			{!! Form::close() !!}
-			</div>
-		</div>
+		
 		<div id="m_personal" class="modal modal-fixed-footer">
 			{!! Form::open() !!}
 			<div class="modal-content">
 				<h4>Profile</h4>
 				<div class="row">
-					<div class="col s12 m12 l12">
-						{!! Form::text('username',Auth::user()->username) !!}
-						<label for="username">Username</label>
-					</div>
-					{{--<div class="col s12 m12 l12">
-						{!! Form::text('github_id',Auth::user()->userInformation->github_id) !!}
-						<label for="github_id">Github ID</label>
-					</div>--}}
-					@if(Auth::user()->user_type === '0')
-						<div class="col s12 m12 l12">
-							{!! Form::text('student_id',Auth::user()->userInformation->student_id) !!}
-							<label for="student_id">Student ID</label>
-						</div>
-						@endif
-					@if(Auth::user()->user_type === '1')
-						<div class="col s12 m12 l12">
-							{!! Form::text('employee_id',Auth::user()->userInformation->employee_id) !!}
-							<label for="employee_id">Employee ID</label>
-						</div>
-						@endif
-					{{--@if( count(App\user_info::find(Auth::user()->id)) === 1 )--}}
-						<div class="col s12 m3 l3">
-							{!! Form::text('first_name',Auth::user()->userInformation->first_name) !!}
-							<label for="first_name">First</label>
-						</div>
-						<div class="col s12 m3 l3">
-							{!! Form::text('middle_name',Auth::user()->userInformation->middle_name) !!}
-							<label for="middle_name">Middle</label>
-						</div>
-						<div class="col s12 m3 l3">
-							{!! Form::text('last_name',Auth::user()->userInformation->last_name) !!}
-							<label for="last_name">Last</label>
-						</div>
-						<div class="col s12 m3 l3">
-							{!! Form::text('suffix_name',Auth::user()->userInformation->suffix_name) !!}
-							<label for="suffix_name">Suffix</label>
-						</div>
-						<div class="col s12 m3 l3">
-							<label>Sex:</label>
-							<select name="sex">
-								@if( Auth::user()->userInformation->sex === 'MALE')
-									<option value="MALE" selected>Male</option> 
-								@else
-									<option value="MALE">Male</option> 
-								@endif
-								@if( Auth::user()->userInformation->sex === 'FEMALE')
-									<option value="FEMALE" selected>Female</option>
-								@else
-									<option value="FEMALE" >Female</option> 
-								@endif
-							</select>
-						</div>
-						<div class="col s12 m12 l12">
-							{!! Form::text('perm_address',Auth::user()->userInformation->perm_address) !!}
-							<label for="perm_address">Permanent Address</label>
-						</div>
-						<div class="col s12 m12 l12">
-							{!! Form::text('tempo_address',Auth::user()->userInformation->tempo_address) !!}
-							<label for="tempo_address">Temporary Address</label>
-						</div>
-						@if(Auth::user()->user_type === '1')
-						<div class="col s12 m12 l12">
-							{!! Form::text('office_address',Auth::user()->userInformation->office_address) !!}
-							<label for="office_address">Office Address</label>
-						</div>
-						@endif
-					{{--@endif--}}
+				
 				</div>
 
 				<div id="div_extra_dtls"></div>
@@ -269,9 +157,9 @@
 			<div class="modal-content">
 				<div class="row">
 					<ul class="tabs" id="post_tabs">
-						<li class="tab col s3"><a class="red-text text-accent-4" href="#post_disc">Discussion</a></li>
+						<li class="tab col s3"><a class="red-text text-accent-4" href="#post_disc">News</a></li>
 						<li class="tab col s3"><a class="red-text text-accent-4" href="#post_task">Assign Task</a></li>
-						<li class="tab col s3"><a class="red-text text-accent-4" href="#post_announce">Announcement</a></li>
+						<li class="tab col s3"><a class="red-text text-accent-4" href="#post_patient_add">Add Patient</a></li>
 						<div class="indicator red darken-4" style="z-index:1"></div>
 					</ul>
 					<div id="post_disc" class="row">
@@ -286,19 +174,6 @@
 								<option value='3'>3</option>
 								<option value='2'>2</option>
 								<option value='1'>1</option>
-							</select>
-						</div>
-						<div class="col s12 m6 l6">
-							<label class="active" for="project">Project</label>
-							<select id="pd_project" name="pd_project" class="red-text text-accent-4">
-								<option disabled></option>
-								@foreach(Auth::user()->projects as $project)
-									@if($project->project->project_id === $project)
-										<option value="{!! $project->project_id!!}" selected>{!! $project->project->text !!}</option>
-									@else
-										<option value="{!! $project->project_id!!}" >{!! $project->project->text !!}</option>
-									@endif
-								@endforeach
 							</select>
 						</div>
 						<input type="text" id="title" name="title">
@@ -322,7 +197,19 @@
 						</div>
 					</div>
 					<div id="post_task" class="col s12">Assign Task</div>
-					<div id="post_announce" class="col s12">Announcement</div>
+					<div id="post_patient_add" class="col s12">Add Patient
+						{!! Form::open(['route'=>'getActivationCode','id'=>'f_activation']) !!}
+						{!! csrf_field() !!}
+							
+							{!! Form::email('email',null,['class'=>'form-control']) !!}
+							<label for="email">Email</label>
+							<br/><br/>
+							
+						{!! Form::close() !!}<button id="sub" class="btn waves-effect red darken-4" onclick="submitActivationForm()">Get Code
+								<i class="material-icons right">done</i>
+							</button>
+						<div id = "codeActivation" class="input-field col s12">
+					</div>
 				</div>	
 			</div>
 			<div class="modal-footer">
@@ -344,7 +231,7 @@
           <div class="container">
             <div class="row">
               <div class="col l6 s12">
-                <h5 class="red-text text-darken-1">ProM: ICS Project Management System</h5>
+                <h5 class="red-text text-darken-1">ReWrighT: Hand and Wrist rehabilitaion system</h5>
                 <p class="red-text text-darken-4">Help me</p>
               </div>
               <div class="col l4 offset-l2 s12">
@@ -360,15 +247,14 @@
           </div>
           <div class="footer-copyright">
             <div class="container red-text text-darken-1">
-            © 2016 ICS ProM: ICS Project Management System
+            © 2019 ReWrighT: Hand and Wrist rehabilitaion system
             <!--a class="grey-text text-lighten-4 right" href="#!">More Links</a-->
             </div>
           </div>
         </footer>
     <script type="text/javascript">
-        var project_id = {{ $project->project_id }};
-        var project_id_postings = {{ $project->project_id }};
         var board = "db_disc_board";
+        var project_id = <?php echo Auth::user()->projects[0]->project_id; ?>;
         var discussions=[];
         var tasks=[];
         var general ={details:'',content:'',comment:''};

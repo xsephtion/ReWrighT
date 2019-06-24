@@ -18,3 +18,25 @@ function addNode(parent,type,id,name,classTxt,value,inpType,textNode){
 	parent.appendChild(tmp);
 	return tmp;
 }
+function ajaxSubmitPostings(formId,dataform){
+	var error;
+		$.ajax({
+            url: $(formId).attr('action'),
+            processData: false,
+			contentType: false,
+			mimeType: 'multipart/form-data',
+            type:"POST",
+            data: dataform,
+            
+            success:function(data){
+				return true;
+            },error:function(data){ 
+                error = data.status;
+                return false;
+            }
+        });
+    if(error == undefined){
+    	return true;
+    }
+    return false;
+}

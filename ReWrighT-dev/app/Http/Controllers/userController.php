@@ -40,12 +40,31 @@ class UserController extends Controller
     *  @return view
     */
     public function dashboard(Request $request){   
-        //dd(Auth::user()->projects[0]->project_id);
-        if(!is_null(Auth::user()->projects[0]->project_id)){
-            $project = Auth::user()->projects[0]->project_id;
-            return view('dashboard',compact('project'));//$request->user()->username;
+        if(Auth::user()->user_types === 0){
+            Auth::logout();
+            return redirect()
+                ->route('loginAdmin')
+                ->with('error','Account is an admin.');
+        }else if(Auth::user()->user_types === 1){
+                return view('dashboard');
+        }else if(Auth::user()->user_types === 2){
+                return view('dashboard2');   
+        }
+        
+    }
+    /**
+    *
+    *  return dashboard page
+    *  @return view
+    */
+    public function dashboardAdmin(Request $request){
+        if(Auth::user()->user_types === 0){
+            return view('dashboardAdmin');//$request->user()->username; 
         }else{
-            return view('dashboard2');//$request->user()->username;
+            Auth::logout();
+            return redirect()
+                ->route('login')
+                ->with('error','Account is not an admin.');
         }
     }
     /**
@@ -68,7 +87,7 @@ class UserController extends Controller
         dd($request->all());
         $input = Input::all();
         $user_id = Auth::user()->id;
-        if(Auth::user()->user_type == 1){
+        if(Auth::user()->user_types == 1){
             $user = users_teacher::where('user_id',$user_id)->first();
             
             $user->first_name = Input::get('fname');
@@ -100,6 +119,17 @@ class UserController extends Controller
         }
         return Redirect::intended('/profile');
     }
+    /**
+     *  Log out the user 
+     *
+     *  @return void
+     */
+    public function getLogoutAdmin(){
+        
+        Auth::logout();
+        
+        return redirect()->intended('/auth/admin/login');
+    }
 	/**
      *  Log out the user 
      *
@@ -107,9 +137,16 @@ class UserController extends Controller
      */
     public function getLogout(){
         
-        Auth::logout();
+        if(Auth::user()->user_types === 0){
+            
+            Auth::logout();
+            return redirect()->intended('/auth/admin/login');
+        }else{
+            Auth::logout();
         
-        return redirect()->intended('/');
+            return redirect()->intended('/');    
+        }
+        
     }
     
 }

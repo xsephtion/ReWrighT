@@ -26,14 +26,25 @@
 Route::group(['middleware' => ['web']], function () {
     Route::get('/', 'indexController@index');										//Index Page
 //Login routes
+    Route::get('auth/admin/login','Auth\AuthController@showAdminLoginForm');
+	Route::post('auth/admin/login', ['as' => 'loginAdmin', 'uses'=> 'Auth\AuthController@loginAdmin']);
 	Route::get('auth/login','Auth\AuthController@showLoginForm');
 	Route::post('auth/login', ['as' => 'login', 'uses'=> 'Auth\AuthController@login']);
+
 // Registration routes	
-	Route::get('auth/register', 'Auth\AuthController@getRegister');
-	Route::post('auth/register', ['as' => 'register', 'uses' => 'Auth\AuthController@postRegister']);
-//
+	//Route::get('auth/activate', 'Auth\AuthController@getRegister');
+	//Route::post('auth/activate', ['as' => 'register', 'uses' => 'Auth\AuthController@postRegister']);
+	
+	Route::post('admin/auth/register', ['as' => 'registerByAdmin', 'uses' => 'adminController@registerByAdmin']);
+	Route::get('admin/auth/register', 'adminController@registerByAdmin');
+
+	Route::post('admin/auth/register/getCode', ['as' => 'getActivationCode', 'uses' => 'adminController@getActivationCode']);
+	Route::get('admin/auth/register/getCode', 'adminController@getActivationCode');
+//logout routes
+	Route::get('/admin/logout',['as' => 'logoutAdmin', 'uses'=>'UserController@getLogoutAdmin']);	
 	Route::get('/logout',['as' => 'logout', 'uses'=>'UserController@getLogout']);											// Logout route
 // Dashboard Routes
+	Route::get('/admin/dashboard', ['as'=>'dashboardAdmin','uses'=>'userController@dashboardAdmin']);
 	Route::get('/dashboard', ['as'=>'dashboard','uses'=>'userController@dashboard']);
 	Route::get('/dashboard2', ['as'=>'dashboard2','uses'=>'userController@dashboard2']);
 	Route::post('/dashboard', ['as' => 'editProfile', 'uses' => 'userController@editUserProfile']);
@@ -67,11 +78,16 @@ Route::group(['middleware' => ['web']], function () {
 
 //Images
 	Route::get('/profile/image/{type}/{person}', 'imagesController@profilePicture');
+	Route::get('/profile/image/get/{type}/{image}', 'imagesController@forcedGetPicture');
 	Route::get('/discussion/image/{image}', 'imagesController@discussionImage');
 //Projects
 	Route::post('/project/getProjects', ['as' => 'getProjects', 'uses' =>'projectController@getProjects']);	//ajax request
 	Route::get('/project/getProjects', 'projectController@getProjects');	//ajax request
 
 	Route::post('/project/joinProject/{id}', ['as' => 'joinProject', 'uses' =>'projectController@joinProject']);	//ajax request
-	Route::get('/project/joinProject/{id}', 'projectController@joinProject');	//ajax request
+	Route::get('/project/joinProject/{id}', 'projectController@joinProject');	//ajax request\
+
+	Route::get('/tasks/', 'taskController@openTasks');
+	Route::get('/tasks/{id}', 'taskController@openTask');	//ajax request\
+
 });

@@ -22,7 +22,7 @@
 					<div class="card-content">
 						<span class="card-title">Log in</span>
 						<div id="div_login">
-							{!! Form::open(['route'=>'login']) !!}
+							{!! Form::open(['route'=>'loginAdmin']) !!}
 							{!! csrf_field() !!}
 								{!! Form::text('login_id',null,['class'=>'validate']) !!}
 								<label for="login_id">Username/Email</label>
@@ -37,7 +37,7 @@
 								    <i class="large material-icons right">send</i>
 								</button>
 							{!! Form::close() !!}
-								
+							<br/><br/>
 						</div>
 					</div>
 				</div>

@@ -3,7 +3,6 @@
 @section('content')
 	@if($errors->has())
 		@foreach($errors->all() as $error)
-
 			<script type="text/javascript">
 				var toastContent = "<span>{{ $error }}</span>";
 				Materialize.toast(toastContent, 5000, 'red darken-4');
@@ -28,8 +27,8 @@
 							<div class="input-field col s12">
 								<select name='user_types'>
 									<option value="" disabled selected>Choose your option</option>
-									<option value="0">Student</option>
-									<option value="1">Professor</option>
+									<option value="1">Student</option>
+									<option value="2">Professor</option>
 								</select>
 								<label>Type:</label>
 							</div>

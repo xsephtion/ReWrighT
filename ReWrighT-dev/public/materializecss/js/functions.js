@@ -458,7 +458,7 @@ $('.boards').on('click',function(){
                 return false;
             }
         });
-	}
+	}else if(board == 'db_task_board'){}
 });
 
 

@@ -82,4 +82,58 @@ class taskController extends Controller
         }
         return redirect()->route('dashboard');
     }
+    /**
+     *  join Projects
+     *
+     *  @return array
+     */
+    public function openTask(Request $request,$id){
+        
+        return view('task');
+        /*$projects = Auth::user()->projects;
+        foreach ($projects as $project) {
+            if($id == $project->project_id){
+                $response = [
+                'success'       => true,
+                'message'       => "already in the project."
+            ];
+            return response()
+                    ->json($response);
+                    break;
+            }
+        }
+        developer::create([
+            'project_id'    => $id,
+            'user_id'       => Auth::user()->id,
+            'role'          => Auth::user()->user_type
+            ]);
+        */
+    }
+    /**
+     *  join Projects
+     *
+     *  @return array
+     */
+    public function openTasks(Request $request){
+        
+        return redirect()->route('dashboard');
+        /*$projects = Auth::user()->projects;
+        foreach ($projects as $project) {
+            if($id == $project->project_id){
+                $response = [
+                'success'       => true,
+                'message'       => "already in the project."
+            ];
+            return response()
+                    ->json($response);
+                    break;
+            }
+        }
+        developer::create([
+            'project_id'    => $id,
+            'user_id'       => Auth::user()->id,
+            'role'          => Auth::user()->user_type
+            ]);
+        */
+    }
 }

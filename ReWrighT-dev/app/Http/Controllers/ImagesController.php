@@ -36,7 +36,31 @@ class imagesController extends Controller
        
         return Image::make($storagePath)->resize($size,$size)->response();
     }
-	
+
+	public function forcedGetPicture($type,$image)
+    {
+        if($image == null)
+            $image = "notavailable.jpg";
+
+        if(!Storage::disk('local')->has($image)){
+            $response = [
+                'success'   => False,
+                'message'   => "Image unavailable"
+            ];
+            return response()
+                ->json($response);
+        }
+        $storagePath = Storage::disk('local')->get($image);
+        $size = 300;
+        if($type == 'f')
+            $size = 300;
+        else if($type == 't'){
+            $size = 60;
+        }
+       
+        return Image::make($storagePath)->resize($size,$size)->response();
+    }
+
     public function discussionImage($image)
     {
     	if(!Storage::disk('local')->has($image)){

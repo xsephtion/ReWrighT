@@ -16,8 +16,6 @@ class CreateUsersInfoTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('profile')->nullable();
             $table->string('banner')->nullable();
-            $table->string('student_id')->nullable();
-            $table->string('employee_id')->nullable();
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');

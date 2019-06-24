@@ -41,7 +41,7 @@ class projectController extends Controller
 	    		if($id == $project->project_id){
 	    			$response = [
 	                'success'       => true,
-	                'message'       => "already in the project."
+	                'message'       => "Already admitted to physician."
 	            ];
 		    	return response()
 		                ->json($response);

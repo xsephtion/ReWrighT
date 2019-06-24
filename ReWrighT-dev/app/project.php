@@ -14,7 +14,9 @@ class project extends Model
     protected $table = 'projects';
 
     protected $fillable = [
+        'owner_id',
     	'text',
+        'size',
     	'active',
     	'update_ts'
     ];

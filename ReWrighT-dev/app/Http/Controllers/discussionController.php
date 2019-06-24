@@ -109,6 +109,7 @@ class discussionController extends Controller
                 ->where('discussions_board.id','=',$id)
                 ->leftjoin('discussion_notifs','discussion_notifs.discussion_id','=','discussions_board.id')
                 ->first();
+
             $project = project::find($query->project_id)->first();
             $user = User::find($query->user_id);
             $disc = [ 
