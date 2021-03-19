@@ -15,19 +15,13 @@ class task extends Model
 
     protected $fillable = [
     	'project_id',
+        'user_id',
     	'title',
     	'text',
-    	'image',
-    	'priority',
-    	'user_id',
-    	'assigned_to_id',
-    	'dt_deadline',
-    	'dt_started_on',
-    	'dt_ended_on',
-    	'active',
-    	'status',
-    	'hours_spent',
-    	'update_ts'
+        'image',
+        'exer_data',
+        'frequency',
+        'active'
     ];
     /**
      * User Information
@@ -48,13 +42,13 @@ class task extends Model
         return $this->belongsTo('App\project');
     }
     /**
-     * Comments
+     * User Information
      *
-     * @return \illuminate\Database\Eloquent\Relations\HasMany
+     * @return \illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function comments()
+    public function assignedTo()
     {
-        return $this->hasMany('App\task_comment');
+        return $this->belongsTo('App\assigned_to');
     }
     /**
      * notifs
@@ -65,4 +59,15 @@ class task extends Model
     {
         return $this->hasMany('App\task_notif');
     }
+    /**
+     * exer_datas
+     *
+     * @return \illuminate\Database\Eloquent\Relations\HasMany
+     */
+    /*
+    public function exer_datas()
+    {
+        return $this->hasMany('App\task_exer_data');
+    }
+    */
 }

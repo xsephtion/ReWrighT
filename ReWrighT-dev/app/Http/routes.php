@@ -30,6 +30,13 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('auth/admin/login', ['as' => 'loginAdmin', 'uses'=> 'Auth\AuthController@loginAdmin']);
 	Route::get('auth/login','Auth\AuthController@showLoginForm');
 	Route::post('auth/login', ['as' => 'login', 'uses'=> 'Auth\AuthController@login']);
+//Profile routes
+	Route::post('auth/profile/save/', ['as' => 'postEditProfile', 'uses' =>'UserController@saveEditUserProfile']);	//ajax request
+	Route::get('auth/profile/edit/{code}','UserController@editUserProfile1');
+	Route::post('auth/profile/edit/{code}', ['as' => 'editProfile', 'uses'=> 'UserController@editUserProfile1']);
+	
+	Route::post('auth/search/patient', ['as' => 'getPatientSrch', 'uses' => 'userController@getPatientSrch']);
+	Route::get('auth/search/patient', 'userController@getPatientSrch');
 
 // Registration routes	
 	//Route::get('auth/activate', 'Auth\AuthController@getRegister');
@@ -40,14 +47,20 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::post('admin/auth/register/getCode', ['as' => 'getActivationCode', 'uses' => 'adminController@getActivationCode']);
 	Route::get('admin/auth/register/getCode', 'adminController@getActivationCode');
+//Patient group (admin only)
+	Route::post('admin/auth/search/PatientGroupInfo', ['as' => 'getPatientGroup', 'uses' => 'adminController@getPatientGroup']);
+	Route::get('admin/auth/search/PatientGroupInfo', 'adminController@getPatientGroup');
+
+	Route::post('/admin/auth/updatepgcount', ['as' => 'pgUpdateCount', 'uses' =>'adminController@postUpdatePGCount']);	//ajax request
+	Route::get('/admin/auth/updatepgcount', 'adminController@postUpdatePGCount');
 //logout routes
 	Route::get('/admin/logout',['as' => 'logoutAdmin', 'uses'=>'UserController@getLogoutAdmin']);	
-	Route::get('/logout',['as' => 'logout', 'uses'=>'UserController@getLogout']);											// Logout route
+	Route::get('/logout',['as' => 'logout', 'uses'=>'UserController@getLogout']);				// Logout route
 // Dashboard Routes
 	Route::get('/admin/dashboard', ['as'=>'dashboardAdmin','uses'=>'userController@dashboardAdmin']);
-	Route::get('/dashboard', ['as'=>'dashboard','uses'=>'userController@dashboard']);
+	Route::get('/dashboard/', ['as'=>'dashboard','uses'=>'userController@dashboard']);
 	Route::get('/dashboard2', ['as'=>'dashboard2','uses'=>'userController@dashboard2']);
-	Route::post('/dashboard', ['as' => 'editProfile', 'uses' => 'userController@editUserProfile']);
+	//Route::post('/dashboard', ['as' => 'editProfile', 'uses' => 'userController@editUserProfile2']);
 // Discussions
 	Route::post('/discussionBoard', ['as' => 'discussionBoard', 'uses' =>'discussionController@getDiscussions']);	//ajax request
 	Route::get('/discussionBoard', 'discussionController@getDiscussions');
@@ -76,6 +89,9 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/taskBoard', ['as' => 'taskBoard', 'uses' =>'taskController@getTasks']);	//ajax request
 	Route::get('/taskBoard', 'taskController@getTasks');	//ajax request
 
+	Route::post('/taskBoard/info', ['as' => 'taskBoardInfo', 'uses' =>'taskController@getTask']);	//ajax request
+	Route::get('/taskBoard/info', 'taskController@getTask');	//ajax request
+
 //Images
 	Route::get('/profile/image/{type}/{person}', 'imagesController@profilePicture');
 	Route::get('/profile/image/get/{type}/{image}', 'imagesController@forcedGetPicture');
@@ -88,6 +104,43 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/project/joinProject/{id}', 'projectController@joinProject');	//ajax request\
 
 	Route::get('/tasks/', 'taskController@openTasks');
-	Route::get('/tasks/{id}', 'taskController@openTask');	//ajax request\
+	Route::get('/tasks/{id}', 'taskController@openTask');				//ajax request\
+	Route::get('/preview/{id}', 'taskController@reviewExercise');				//ajax request\
+	Route::post('/recordings/lab', ['as' => 'vanillaLab', 'uses' =>'taskController@vanillaLab']);	//ajax 
+	Route::get('/recordings/lab', 'taskController@vanillaLab');				//ajax request\
+	Route::post('/recordings/exer/result/', 'taskController@getResultData');	//ajax request\
+	Route::get('/recordings/exer/{id}', 'taskController@getExerDataTask');	//ajax request\
+	Route::get('/recordings/patient_exer/{id}', 'taskController@getPatientExerDataTask');	//ajax request\
+	Route::get('/recordings/training/{id}', 'taskController@getTrainingDataTask');	//ajax request\
+	Route::get('/recordings/preview/{id}', 'taskController@getExerData');	//ajax request\
 
-});
+
+	Route::post('/post/task', ['as' => 'postTask', 'uses' =>'taskController@postTask']);	//ajax 
+	Route::get('/post/task', 'taskController@postTask');
+	Route::post('/post/task/patient', ['as' => 'postTaskPatient', 'uses' =>'taskController@postTaskPatient']);	//ajax 
+	Route::get('/post/task/patient', 'taskController@postTaskPatient');
+	Route::post('/post/task/patient/result', ['as' => 'postTaskPatientResult', 'uses' =>'taskController@postTaskPatientResult']);	//ajax 
+	Route::get('/post/task/patient/result', 'taskController@postTaskPatientResult');
+
+	Route::post('/post/exerdata/list', ['as' => 'postExerciseDataList', 'uses' =>'taskController@postExerciseDataList']);	//ajax 
+	Route::get('/post/exerdata/list', 'taskController@postExerciseDataList');
+
+	Route::post('/post/patient/list', ['as' => 'postExerciseDataList', 'uses' =>'projectController@postPatientDataList']);	//ajax 
+	Route::get('/post/patient/list', 'projectController@postPatientDataList');
+
+	Route::post('/post/exerdata', ['as' => 'postExerciseData', 'uses' =>'taskController@postExerciseData']);	//ajax 
+	Route::get('/post/exerdata', 'taskController@postExerciseData');
+	Route::post('/post/exerdata/adjustedScore', ['as' => 'postAdjustedScore', 'uses' =>'taskController@postAdjustedScore']);	//ajax 
+	Route::get('/post/exerdata/adjustedScore', 'taskController@postAdjustedScore');
+
+//Tasks	
+	Route::post('/note/list/', ['as' => 'noteList', 'uses' =>'notesController@getPatientNotes']);	//ajax request
+	Route::get('/note/list/', 'notesController@getPatientNotes');	//ajax request
+	Route::post('/note/list/task', ['as' => 'noteListTask', 'uses' =>'notesController@getTaskExerDataNotes']);	//ajax request
+	Route::get('/note/list/task', 'notesController@getTaskExerDataNotes');	//ajax request 
+	Route::post('/note', ['as' => 'noteInfo', 'uses' =>'notesController@getNotegetNote']);	//ajax request
+	Route::get('/note', 'notesController@getNote');	//ajax request 
+
+	Route::post('/post/note', ['as' => 'postNote', 'uses' =>'notesController@postNote']);	//ajax 
+	Route::get('/post/note', 'notesController@postTask');
+}); 

@@ -29,11 +29,17 @@ class CreateProjectsTable extends Migration
      */
     public function down()
     {
+        /*
+        Schema::drop('task_assignment');
+        Schema::drop('tag_info');
+        Schema::drop('task_tag');
+        Schema::drop('tasks_board');
         Schema::drop('discussion_notifs');
         Schema::drop('discussion_votes');
         Schema::drop('discussion_comments');
         Schema::drop('discussions_board');
         Schema::drop('developers');
         Schema::drop('projects');
+        */
     }
 }

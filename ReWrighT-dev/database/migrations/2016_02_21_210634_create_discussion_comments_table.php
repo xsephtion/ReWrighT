@@ -16,7 +16,7 @@ class CreateDiscussionCommentsTable extends Migration
             $table->integer('discussion_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->increments('id');
-            $table->string('text')->nullable();
+            $table->mediumText('text')->nullable();
             $table->string('image')->nullable();
             $table->integer('upvote')->nullable();
             $table->integer('downvote')->nullable();

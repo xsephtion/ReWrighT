@@ -114,7 +114,7 @@ class AuthController extends Controller
                         
                         $err_type = -1;
                         foreach($db as $acc){
-                            if($acc['user_types'] != '0'){
+                            if($acc->user_types != '0'){
                                 $err_type = 0;
                                 break;
                             }
@@ -135,10 +135,11 @@ class AuthController extends Controller
                         ->with('error','Account does not exist.')
                         ->withInput($request->except('password'));
                     }else{
-                        $db = DB::table('users')->select('user_types')->where('username','=',$userdata['username'])->first();
+                        $db = DB::table('users')->select('user_types')->where('username','=',$userdata['username'])->get();
+
                         $err_type = -1;
                         foreach($db as $acc){
-                            if($acc['user_types'] != '0'){
+                            if($acc->user_types != '0'){
                                 $err_type = 0;
                                 break;
                             }

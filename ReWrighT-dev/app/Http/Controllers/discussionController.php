@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers; 
 
 use Illuminate\Http\Request;
 use Image;
@@ -27,7 +27,7 @@ class discussionController extends Controller
      *
      *  @return array
      */
-    public function getDiscussions(Request $request){
+    public function getDiscussions(Request $request){ 
         
         if ( $request->ajax() ) {
             $project_id = $request->get('project');
@@ -35,8 +35,20 @@ class discussionController extends Controller
             $page = $request->get('page')*10;
             
             if($all == "true"){
-                $discussions = discussion_notif::select('discussion_notifs.id as notif_id','discussion_notifs.user_id as notif_user','discussion_notifs.seen as seen','discussion_notifs.read as read','discussions_board.project_id','discussions_board.id as discussion_id','discussions_board.user_id as creator_user','discussions_board.title as title','discussions_board.text as text','discussions_board.image as image','discussions_board.priority as priority','discussions_board.active as active','discussions_board.updated_at','discussions_board.created_at')
+                if(Auth::user()->users_type == 1){
+                    $discussions = discussion_notif::select('discussion_notifs.id as notif_id','discussion_notifs.user_id as notif_user','discussion_notifs.seen as seen','discussion_notifs.read as read','discussions_board.project_id','discussions_board.id as discussion_id','discussions_board.user_id as creator_user','discussions_board.title as title','discussions_board.text as text','discussions_board.image as image','discussions_board.priority as priority','discussions_board.active as active','discussions_board.updated_at','discussions_board.created_at')
+                            ->where('discussions_board.project_id','=',$project_id)
+                            ->leftjoin('discussions_board','discussion_notifs.discussion_id','=','discussions_board.id')
+                            ->orderBy('discussions_board.priority','asc')
+                            ->orderBy('discussions_board.updated_at','asc')
+                            ->orderBy('discussions_board.created_at','asc')
+                            ->skip($page)
+                            ->take(10)
+                            ->get();
+                }else{
+                    $discussions = discussion_notif::select('discussion_notifs.id as notif_id','discussion_notifs.user_id as notif_user','discussion_notifs.seen as seen','discussion_notifs.read as read','discussions_board.project_id','discussions_board.id as discussion_id','discussions_board.user_id as creator_user','discussions_board.title as title','discussions_board.text as text','discussions_board.image as image','discussions_board.priority as priority','discussions_board.active as active','discussions_board.updated_at','discussions_board.created_at')
                         ->where('discussions_board.project_id','=',$project_id)
+                        ->where('discussion_notifs.user_id','=',intval(Auth::user()->id))
                         ->leftjoin('discussions_board','discussion_notifs.discussion_id','=','discussions_board.id')
                         ->orderBy('discussions_board.priority','asc')
                         ->orderBy('discussions_board.updated_at','asc')
@@ -44,11 +56,14 @@ class discussionController extends Controller
                         ->skip($page)
                         ->take(10)
                         ->get();
+                }
             }else{
+                $patient_id = $request->get("patient_id");
+                
                 $discussions = discussion_notif::select('discussion_notifs.id as notif_id','discussion_notifs.user_id as notif_user','discussion_notifs.seen as seen','discussion_notifs.read as read','discussions_board.project_id','discussions_board.id as discussion_id','discussions_board.user_id as creator_user','discussions_board.title as title','discussions_board.text as text','discussions_board.image as image','discussions_board.priority as priority','discussions_board.active as active','discussions_board.updated_at','discussions_board.created_at')
+                        ->where('discussions_board.project_id','=',$project_id)
                         ->leftjoin('discussions_board','discussion_notifs.discussion_id','=','discussions_board.id')
-                        ->where('discussion_notifs.user_id','=',Auth::user()->id)
-                        ->where('discussion_notifs.seen','=',false)
+                        ->where('discussion_notifs.user_id','=',$patient_id)
                         ->orderBy('discussions_board.priority','asc')
                         ->orderBy('discussions_board.updated_at','asc')
                         ->orderBy('discussions_board.created_at','asc')

@@ -12,24 +12,13 @@
 			<ul id="nav-desktop" class="side-nav fixed">
 				<li class="no-padding">
 					<a href="#!">
-						<i class="material-icons left">schedule</i> Timeline
-						{{-- timeline --}}
+						<i class="material-icons left">schedule</i> Timeline 		{{-- timeline --}}
 					</a>
 				</li>										
 				<li class="no-padding">																
-					<ul class="collapsible collapsible-accordion">
-						<li>
-							<a href="#!" id='db_task_board' class="collapsible-header">
-								<i class="material-icons left">work</i>Manage {{-- tasks board --}}
-							</a>
-							<div class="collapsible-body">
-								<ul>
-									<li id="userManage" class="red-text text-darken-4"><a onclick="">User</a></li>
-									<li id="taskManage" class="red-text text-darken-4"><a onclick="">Tasks</a> </li>
-								</ul>
-							</div>
-						</li>
-					</ul>						
+					<a href="#!" id='db_manage'>
+						<i class="material-icons left">work</i>Manage 				{{-- Manage --}}
+					</a>
 				</li>
 				<li class="no-padding" id='db_profile'>
 					<a href="#m_personal" class="modal-trigger">
@@ -45,7 +34,21 @@
 		    </ul>
 		    <ul id="slide-out" class="side-nav">
 				<li><a href="#!"><i class="material-icons left">schedule</i>Timeline</a></li>				{{-- timeline --}}
-				<li><a href="#!"><i class="material-icons left">work</i>Tasks</a></li>						{{-- tasks board --}}
+				<li class="no-padding">																		{{-- Manage --}}
+					<ul class="collapsible collapsible-accordion">
+						<li>
+							<a class="collapsible-header"><i class="material-icons left">work</i>Manage</a>
+							<div class="collapsible-body">
+								<ul>
+									<li class="red-text text-darken-4"><a href = "#!" onclick = "$('ul.tabs').tabs('select_tab', 'manageUser');">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspUser</a></li>
+									<li class="red-text text-darken-4"><a href = "#!" onclick = "$('ul.tabs').tabs('select_tab', 'managePG');">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspPatient Group</a></li>
+									<li class="red-text text-darken-4"><a href = "#!" onclick = "$('ul.tabs').tabs('select_tab', 'manageDiscussion');">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspDiscussions</a></li>
+									<li class="red-text text-darken-4"><a href = "#!" onclick = "$('ul.tabs').tabs('select_tab', 'manageTask');">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspTasks</a></li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</li>
 				<li class="no-padding">																		{{-- Profile --}}
 					<ul class="collapsible collapsible-accordion">
 						<li>
@@ -72,14 +75,30 @@
 					<div class="row">
 						<div class="col s12 m9 l7 offset-l3">
 							<div class="row">
-								<div id = "userManagement">
-									<div class="col s12" >
-										<ul class="tabs">
-											<li class="tab col s3"><a class="active" href="#createUser">Create User</a></li>
-											<li class="tab col s3"><a href="#getActivationCode">Get Activation Code</a></li>
-											<li class="tab col s3 disabled"><a href="#editUser">Edit User</a></li>
-											<li class="tab col s3 disabled"><a href="#addGroupSize">Add patient number</a></li>
+								<div id = "manage">
+									<div class="col s12 hide-on-med-and-down">
+										<ul class="tabs" id = "menu_tabs">
+											<li class="tab col s3"><a class="active" href="#manageUser">User</a></li>
+											<li class="tab col s3"><a href="#managePG">Patient group</a></li>
+											<li class="tab col s3"><a href="#manageDiscussion">Discussions</a></li>
+											<li class="tab col s3"><a href="#manageTask">Tasks</a></li>
 										</ul>
+									</div>
+								</div>
+								<div id = "manageUser">
+									<nav class = "hide-on-large-only red darken-4">
+											<div class="nav-wrapper">
+												<div class="col s12">
+													<a href="#!" class="breadcrumb">Users</a>
+												</div>
+											</div>
+										</nav>
+									<div class="col s12">
+										<ul class = "pagination">
+											<li class = "active" id = "li_c_user"><a id = "a_c_user" href="#!">Create</a></li>
+											<li id = "li_activation"><a id = "a_activation" href="#!">Activation Code</a></li>
+										</ul>
+										
 									</div>
 									<div id="createUser" class="col s12">
 										{!! Form::open(['route'=>'registerByAdmin','id'=>'f_reg']) !!}
@@ -88,7 +107,7 @@
 											{!! Form::email('email',null,['class'=>'form-control']) !!}
 											<label for="email">Email</label>
 											<div class="input-field col s12">
-												<select name='user_types'>{{-- get this from db next time for scalability--}}
+												<select name='user_types'>		{{-- get this from db next time for scalability--}}
 													<option value="" disabled selected>Choose your option</option>
 													<option value="1">Physician</option>
 													<option value="2">Patient</option>
@@ -104,7 +123,7 @@
 
 										</div>
 									</div>
-									<div id="getActivationCode" class="col s12">
+									<div id="getActivationCode" class="col s12" style = "display:none;">
 										{!! Form::open(['route'=>'getActivationCode','id'=>'f_activation']) !!}
 										{!! csrf_field() !!}
 											
@@ -115,21 +134,59 @@
 										{!! Form::close() !!}<button id="sub" class="btn waves-effect red darken-4" onclick="submitActivationForm()">Get Code
 												<i class="material-icons right">done</i>
 											</button>
-										<div id = "codeActivation" class="input-field col s12">
-
+										<div class="input-field col s12">
+											<ul class = "collection" id = "codeActivation"></ul>
 										</div>
 									</div>
-									<div id="editUser" class="col s12">
-
-									</div>
-									<div id="addGroupSize" class="col s12">Test 3</div>
 								</div>
-								<div id = "taskManagement" style="display:none;">
+								<div id = "managePG">
 									<div class="col s12">
-										<ul class="tabs">
-											<li class="tab col s3"><a class="active" href="#test1">Manage Task</a></li>
-											
-										</ul>
+										<nav class = "hide-on-large-only red darken-4">
+											<div class="nav-wrapper">
+												<div class="col s12">
+													<a href="#!" class="breadcrumb">Patient Group</a>
+												</div>
+											</div>
+										</nav>
+									</div>
+									<div id="test1" class="col s12">
+											<div class="search-wrapper card">
+											{!! Form::open(['route'=>'getPatientGroup','id'=>'f_getPatientGroup']) !!}
+											{!! csrf_field() !!}
+												<div class="input-field">
+													<input type="search" id="search" name = "search" class = "btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Physician email/name or Group ID" required = "required" onkeyup="searchPatientGroup();" />
+													<label for="search"><i class="material-icons">search</i></label>
+													<i class="material-icons">close</i>
+												</div>
+											{!! Form::close() !!}
+											</div>
+										
+										<div class="input-field col s12">
+											<ul class = "collection" id = "patientGroups"></ul>
+										</div>
+									</div>
+								</div>
+								<div id = "manageDiscussion">
+									<div class="col s12">
+										<nav class = "hide-on-large-only red darken-4">
+											<div class="nav-wrapper">
+												<div class="col s12">
+													<a href="#!" class="breadcrumb">Discussions</a>
+												</div>
+											</div>
+										</nav>
+									</div>
+									<div id="test1" class="col s12">Test 1</div>
+								</div>
+								<div id = "manageTask">
+									<div class="col s12">
+										<nav class = "hide-on-large-only red darken-4">
+											<div class="nav-wrapper">
+												<div class="col s12">
+													<a href="#!" class="breadcrumb">Tasks</a>
+												</div>
+											</div>
+										</nav>
 									</div>
 									<div id="test1" class="col s12">Test 1</div>
 								</div>
@@ -172,7 +229,7 @@
 							<label for="suffix_name">Suffix</label>
 						</div>
 						<div class="col s12 m3 l3">
-							<label>Sex:</label>
+							<label>Gender:</label>
 							<select name="sex">
 								@if( Auth::user()->userInformation->sex === 'MALE')
 									<option value="MALE" selected>Male</option> 
@@ -218,7 +275,7 @@
 							<label for="suffix_name">Suffix</label>
 						</div>
 						<div class="col s12 m3 l3">
-							<label>Sex:</label>
+							<label>Gender:</label>
 							<select name="sex">
 								<option value="MALE">Male</option>
 								<option value="FEMALE" >Female</option> 
@@ -258,30 +315,5 @@
 		
 		<!-- End of modals -->
 	</main>
-	<footer class="page-footer grey darken-4">
-          <div class="container">
-            <div class="row">
-              <div class="col l6 s12">
-                <h5 class="red-text text-darken-1">ReWrighT: Hand and Wrist rehabilitaion system</h5>
-                <p class="red-text text-darken-4">Help me</p>
-              </div>
-              <div class="col l4 offset-l2 s12">
-                <h5 class="red-text text-darken-1">Links</h5>
-                <ul>
-                  <li><a class="red-text text-darken-4" href="#!">Link 1</a></li>
-                  <li><a class="red-text text-darken-4" href="#!">Link 2</a></li>
-                  <li><a class="red-text text-darken-4" href="#!">Link 3</a></li>
-                  <li><a class="red-text text-darken-4" href="#!">Link 4</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="footer-copyright">
-            <div class="container red-text text-darken-1">
-            © 2019 ReWrighT: Hand and Wrist rehabilitaion system
-            <!--a class="grey-text text-lighten-4 right" href="#!">More Links</a-->
-            </div>
-          </div>
-        </footer>
     
 @stop

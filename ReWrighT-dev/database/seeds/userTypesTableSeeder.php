@@ -17,11 +17,11 @@ class userTypesTableSeeder extends Seeder
         DB::table($table)->delete();
         user_types::create([
     		'type'=>0,
-    		'description'=>'Student'
+    		'description'=>'Admin'
 		]);
     	user_types::create([
     		'type'=>1,
-    		'description'=>'Professor'
+    		'description'=>'User'
 		]);
     }
 }
