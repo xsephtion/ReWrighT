@@ -36,9 +36,9 @@ function updateGenContentTasks(arr,div){
 	var add1 = $('.modal-content ul','#'+div);
 	var add2 = $('.modal-content ul li','#'+div);
 	//add2.remove();
-	//console.table(tasks);
+	console.table(add2);
 		for(var i=0;i < arr.length;i++){
-			if(arr.length == add2.length) break;
+			if(arr.length > 1 && (arr.length == add2.length)) break;
 			var li ="";
 			var font = "";
 			
@@ -841,6 +841,7 @@ $('.boards').on('click',function(){
             	}else{
 
             		var tasks = [];
+
             		if(data.tasks.length > 0){
 						for(var i=0;i< data.tasks.length;i++){
 							var task = {creator_info:undefined,task_info:undefined,patient_info:undefined,exers_info:undefined};
