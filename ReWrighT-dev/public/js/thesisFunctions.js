@@ -69,7 +69,7 @@ function onProtocol(frame) {
           record.push(euclideanDistance(hand.fingers[3],hand.fingers[2]));
           record.push(euclideanDistance(hand.fingers[2],hand.fingers[1]));
         }
-        //console.table(record);console.log("here");
+        //console.table(record);
       }
       //temp = record;
       fingers = undefined;

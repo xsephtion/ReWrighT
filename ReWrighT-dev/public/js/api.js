@@ -20,9 +20,6 @@ function addNode(parent,type,id,name,classTxt,value,inpType,textNode){
 }
 function ajaxSubmitPostings(formId,dataform){
 	var error;
-		/*for(var key of dataform.keys()){
-			console.log(key + " " + dataform.get(key));
-		}*/
 		$.ajax({
             url: $(formId).attr('action'),
             processData: false,
@@ -35,7 +32,7 @@ function ajaxSubmitPostings(formId,dataform){
             	var success = (JSON.parse(data).success) ? JSON.parse(data).success: undefined;
             	var status = (JSON.parse(data).status) ? JSON.parse(data).success: undefined;
             	var msg = JSON.parse(data).message;
-            	//console.log(status);
+
             	if(success!=undefined && success == false){
                 	var toastContent = "<span>"+msg+"</span>";
                     Materialize.toast(toastContent, 5000, 'red darken-4');
@@ -158,9 +155,7 @@ function imageCardV2(div,image,text){
 		img.src = "http://" + siteUrl + "/discussion/image/"+image;
 		img.alt = 'notavailable';
 	if(text!=undefined){
-		//console.log(text);	
 		var cText = addNode(card,'div',undefined,undefined,'card-content');
-			// (parent,type,id,name,classTxt,value,inpType,textNode)
 		addNode(cText,'p',undefined,undefined,'flow-text',undefined,undefined,text);
 	}
 }

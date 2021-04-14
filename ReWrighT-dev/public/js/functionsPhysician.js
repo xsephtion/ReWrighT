@@ -17,7 +17,6 @@ function searchPatient(){
         data: dataform,
         
         success:function(data){
-            //console.log(data);
             var status = JSON.parse(data).status;
             var msg = JSON.parse(data).message;
             
@@ -63,7 +62,6 @@ function searchPatient(){
                     
                     var li = addNode(cur,"li",undefined,undefined,undefined,undefined,undefined,undefined);
                              addNode(li,'input','h_pg_id'+res_id,'h_pg_id'+res_id,undefined,res_id,'hidden',undefined);
-                                    //(parent,type,id,name,classTxt,value,inpType,textNode)
                     var div_header = addNode(li,"div",undefined,undefined,"collapsible-header");
                     var header_ul = addNode(div_header,"ul",undefined,undefined,"collection");
                     var header_li = addNode(header_ul,"li",undefined,undefined,"collection-item avatar");
@@ -132,7 +130,6 @@ function loadNotes(id){
 
         if(data.status == 'success'){
             var ul = document.getElementById("patientResNotes"+id);
-            console.log(data.notes);
             if(data.notes.length > 0){
               for(info of data.notes){
                 var artcle = {id:'',title:'',text:'',images:'',updated_at:''};
@@ -144,7 +141,6 @@ function loadNotes(id){
                 
 
                 var li = addNode(ul,"li",undefined,undefined,undefined,undefined,undefined,undefined);
-                                        //(parent,type,id,name,classTxt,value,inpType,textNode)
                 var div_header = addNode(li,"div",undefined,undefined,"collapsible-header");
                 var header_ul = addNode(div_header,"ul",undefined,undefined,"collection");
                 var header_li = addNode(header_ul,"li",undefined,undefined,"collection-avatar");
@@ -208,7 +204,6 @@ function loadTasks(id){
                 var toastContent = "<span>" + data.message + "</span>";
                 Materialize.toast(toastContent, 5000, 'red darken-4');
             }else{
-                //console.log(data.tasks);
                 if(data.tasks.length > 0){
                     var resTasks = [];
                     for(var i=0;i<data.tasks.length;i++){
@@ -230,7 +225,6 @@ function loadTasks(id){
                         $('#patientResTask'+id).empty();
                     }
                     var par = document.getElementById('patientResTask'+id);
-                    //addNode(parent,type,id,name,classTxt,value,inpType,textNode)
                     var div = addNode(par,"div",undefined,undefined,"modal-content container");
                     var ul = addNode(div,"ul",undefined,undefined,"collapsible popout");
                     addNode(ul,"li");
@@ -280,7 +274,6 @@ function loadDiscs(id){
                     discussion.priority = data.discussions[i].priority;
 
                 if(resDisc.length == 0){
-                    //console.log(discussion);
                     resDisc.push(discussion);
                 }else{
                     if(function(){

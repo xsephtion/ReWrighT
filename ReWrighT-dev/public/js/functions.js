@@ -35,8 +35,7 @@ function updateGenContentTasks(arr,div){
 
 	var add1 = $('.modal-content ul','#'+div);
 	var add2 = $('.modal-content ul li','#'+div);
-	//add2.remove();
-	console.table(add2);
+	
 		for(var i=0;i < arr.length;i++){
 			if(arr.length > 1 && (arr.length == add2.length)) break;
 			var li ="";
@@ -60,7 +59,6 @@ function updateGenContentTasks(arr,div){
 
 			
 			//task_exer_datas
-			//console.table(tasks[i].exers_info);
 			if(arr[i].exers_info != undefined){
 				//for(var j=0;j<tasks[i].exers_info[j].length;j++){
 					var prev_task_id = -1;
@@ -133,7 +131,6 @@ function updateModal2(currBoard,div){
 				if(discussions.length== add2.length) break;
 				var li ="";
 				var font = "";
-				//console.log(discussions[i]);
 				switch(discussions[i].priority){
 					case 1: li = "<li class='collection-item avatar'>";
 							break;
@@ -175,7 +172,6 @@ function updateModal2(currBoard,div){
 			if(currBoard.length== add2.length) break;
 			var li ="";
 			var font = "";
-			//console.log(discussions[i]);
 			switch(currBoard[i].priority){
 				case 1: li = "<li class='collection-item avatar'>";
 						break;
@@ -252,7 +248,6 @@ function launchGenContent(disc_id){
 	    		artcle.disc_read 	= data.article.disc_read;
 	    		artcle.disc_seen 	= data.article.disc_seen;
 	    		//artcle.comments 	= data.comments;
-	    	//console.table(artcle);
 	    	updateGenContent(artcle);
 			genContentComments(disc_id);
 			return true;
@@ -338,7 +333,6 @@ function commentsRefresh(){
 					genContentComments(displayed_id);
 				}
 			},error:function(data){
-				//console.log(data);
 			},complete: function() {
 		      // Schedule the next request when the current one's complete
 				setTimeout(commentsRefresh, 20000);
@@ -487,7 +481,6 @@ $('.joinProj').on('click',function(){
 		type:"POST",
 		data: data,
 		success:function(data){
-			console.log(data);
 		},
 		error:function(data){
 
@@ -635,7 +628,6 @@ function getPatientList(){
     	success:function(data){
     		var status = data.success;
         	var msg = data.message;
-        	//console.log(status);
         	if(status == false){
             	for(errors of msg){
                     var toastContent = "<span>" + errors + "</span>";
@@ -666,7 +658,6 @@ function getPatientList(){
 	});
 }
 function populateExerData(){
-	//console.log('enter the dragon');
 	getExerDataList();
 	var sel_inp = document.getElementById('leapData');
 	sel_inp.innerHTML = " ";
@@ -674,7 +665,6 @@ function populateExerData(){
 	var opt1 = addNode(sel_inp,'option',undefined,undefined,undefined,undefined,undefined,"Choose exercise.");
 	opt1.setAttribute('disabled', 'disabled');
 	opt1.setAttribute('selected','selected');
-	//console.log(exerDataList);
 	for(result of exerDataList){
     	var row = addNode(sel_inp,'option',undefined,undefined,undefined,result.id,undefined,result.desc);
 
@@ -718,7 +708,6 @@ function submitExer(id){
 	}else{
 		dataform.append('leapData',$('#leapData'+id).prop('files')[0]);
 	}
-	//console.log($('#leapData'+id).val());
 	$.ajax({
 			url: '/post/task/patient',
             processData: false,
@@ -862,7 +851,6 @@ $('.boards').on('click',function(){
 							$('#genContentTask').empty();
 						}
 						var par = document.getElementById('genContentTask');
-						//addNode(parent,type,id,name,classTxt,value,inpType,textNode)
 						var div = addNode(par,"div",undefined,undefined,"modal-content container");
 						var ul = addNode(div,"ul",undefined,undefined,"collapsible popout");
 						addNode(ul,"li");
@@ -1070,7 +1058,6 @@ $(document).ready(function(){
 					    		discussion.priority = data.discussions[i].priority;
 
 					    	if(discussions.length == 0){
-					    		//console.log(discussion);
 					    		discussions.push(discussion);
 					    	}else{
 					    		if(function(){

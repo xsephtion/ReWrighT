@@ -108,7 +108,6 @@ function submitRegForm(){
         data: dataform,
         
         success:function(data){
-        	console.log(data) ;
         	var status = JSON.parse(data).status;
         	var msg = JSON.parse(data).message;
             var cur = document.getElementById('code');
@@ -220,7 +219,6 @@ function searchPatientGroup(){
         data: dataform,
         
         success:function(data){
-            //console.log(data);
             var status = JSON.parse(data).status;
             var msg = JSON.parse(data).message;
             var cur = document.getElementById('patientGroups');

@@ -20,7 +20,6 @@ $.ajax({
         if(data.status == 'success'){
           
             var task_info = data.task;
-            //console.table(task_info);
         }
         var artcle = {id:'',title:'',text:'',images:'',updated_at:''};
             artcle.id    = task_info.task_id;
