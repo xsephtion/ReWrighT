@@ -37,7 +37,7 @@
 								    <i class="large material-icons right">send</i>
 								</button>
 							{!! Form::close() !!}
-							<br/><br/><p><a href="{{ route('register') }}">Sign up now!</a></p>	
+								
 						</div>
 					</div>
 				</div>

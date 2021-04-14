@@ -17,7 +17,8 @@ class CreateUsersTable extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('user_type');
+            $table->string('activation_code');
+            $table->integer('user_types');
             $table->timestamps();
             $table->rememberToken();
         });
@@ -30,6 +31,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        //Schema::drop('users');
     }
 }

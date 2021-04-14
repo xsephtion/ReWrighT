@@ -22,7 +22,6 @@
 				<div id="f" class="card medium">
 					<ul class="tabs">
 						<li class="tab col s3"><a class="red-text text-accent-4" href="#div_login" onclick="changeRegCard(0);">Login</a></li>
-						<li class="tab col s3"><a class="red-text text-accent-4" href="#div_reg" onclick="changeRegCard(1);">Register</a></li>
 						<div class="indicator red darken-4" style="z-index:1"></div>
 					</ul>
 					<div id="div_login" class="col s12">
@@ -41,30 +40,7 @@
 			  				</button>
 						{!! Form::close() !!}
 					</div>
-					<div id="div_reg" class="col s12">
-						<br/>
-						{!! Form::open(['route'=>'register','id'=>'f_reg']) !!}
-						{!! csrf_field() !!}
-							{!! Form::email('email',null,['class'=>'form-control']) !!}
-							<label for="email">Email</label>
-							{!! Form::password('r_password',['id'=>'r_password1','class'=>'form-control password', 'onchange'=>'chk_pword()']) !!}
-							<label id="label_pword" for="r_password">Password</label>
-							{!! Form::password('r_password',['id'=>'r_password2','class'=>'form-control password', 'placeholder' =>'Re-type password', 'onchange'=>'chk_pword()','onkeypress'=>'chk_pword()']) !!}
-							{!! Form::hidden('password','null',['id'=>'password']) !!}
-							
-							<div class="input-field col s12">
-								<select name='user_types'>
-									<option value="" disabled selected>Choose your option</option>
-									<option value="0">Student</option>
-									<option value="1">Professor</option>
-								</select>
-								<label>Type:</label>
-							</div>
-							<button id="sub" class="btn waves-effect red darken-4" onclick="submitRegForm()">Register
-								<i class="material-icons right">done</i>
-							</button>
-						{!! Form::close() !!}
-					</div>
+					
 				</div>
 			</div>
 		</div>

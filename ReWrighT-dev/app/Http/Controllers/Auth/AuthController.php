@@ -39,7 +39,127 @@ class AuthController extends Controller
     protected $redirectTo = "dashboard";
     
     /**
-     * Go to get login.
+     * Go to get Admin login.
+     *
+     * 
+     * @return view 
+     */
+    public function showAdminLoginForm()
+    {
+        return view('default.loginAdmin');
+    }
+    /**
+     * Create a new authentication controller instance.
+     *
+     * @return error
+     * @return view 
+     */
+    public function loginAdmin(Request $request)
+    {
+        
+        // create our user data for the authentication
+        $userdata =  $request->only([
+            'login_id',
+            'password'
+        ]);
+        
+        $remember = $request->input('remember');
+        
+        $field = filter_var($userdata['login_id'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        
+        if($field == 'email') {
+            $rules = array(
+                'email' => 'required|email|max:255', // make sure the email is an actual email
+                'password' => 'required|string|min:6' 
+            );
+        }else{
+            $rules = array(
+                'username' => 'required|string|max:255', // make sure the username exists
+                'password' => 'required|string|min:6' 
+            );    
+        }
+        
+        // change login_id key to appropriate key
+        if (key_exists('login_id',$userdata)) {
+            if($field == 'email'){
+                $userdata['email'] = $userdata['login_id'];
+                unset($userdata['login_id']); 
+            }else{
+                $userdata['username'] = $userdata['login_id'];
+                unset($userdata['login_id']); 
+            }
+            $userdata['user_types'] = 0;
+        }
+
+        // run the validation rules on the inputs from the form
+        $validator = Validator::make($userdata, $rules);
+        
+        // if the validator fails, redirect back to the form
+        if ($validator->fails()) {
+            return redirect()->back()
+                    ->withErrors($validator)
+                    ->withInput($request->except(['password']));
+        }else {
+        
+            if(Auth::attempt($userdata,$remember)){
+                return redirect()->route('dashboardAdmin');
+            }else{               
+                if($field === "email"){
+                    if(DB::table('users')->where('email','=',$userdata['email'])->count() === 0){
+                        return redirect()->route('login')
+                        ->with('error','Account does not exist.')
+                        ->withInput($request->except('password'));
+                    }else{
+                        $db = DB::table('users')->select('user_types')->where('email','=',$userdata['email'])->first();
+                        
+                        $err_type = -1;
+                        foreach($db as $acc){
+                            if($acc->user_types != '0'){
+                                $err_type = 0;
+                                break;
+                            }
+                        }
+                        if($err_type == 0){
+                            return redirect()->route('loginAdmin')
+                                    ->with('error','Account does not have the proper privileges.')
+                                    ->withInput($request->except('password'));
+                        }else{
+                            return redirect()->route('loginAdmin')
+                            ->with('error','E-mail and Password does not match.')
+                            ->withInput($request->except('password'));
+                        }
+                    }
+                }else{
+                    if(DB::table('users')->where('username','=',$userdata['username'])->count() === 0){
+                        return redirect()->route('loginAdmin')
+                        ->with('error','Account does not exist.')
+                        ->withInput($request->except('password'));
+                    }else{
+                        $db = DB::table('users')->select('user_types')->where('username','=',$userdata['username'])->get();
+
+                        $err_type = -1;
+                        foreach($db as $acc){
+                            if($acc->user_types != '0'){
+                                $err_type = 0;
+                                break;
+                            }
+                        }
+                        if($err_type == 0){
+                            return redirect()->route('loginAdmin')
+                                    ->with('error','Account does not have the proper privileges.')
+                                    ->withInput($request->except('password'));
+                        }else{
+                            return redirect()->route('loginAdmin')
+                            ->with('error','E-mail and Password does not match.')
+                            ->withInput($request->except('password'));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    /**
+     * Go to get Physician/Patient login.
      *
      * 
      * @return view 
@@ -98,11 +218,9 @@ class AuthController extends Controller
                     ->withErrors($validator)
                     ->withInput($request->except(['password']));
         }else {
-            $try = DB::table('users')
-                    ->where('username', '=', 'gborjal01')
-                    ->get();
             if(Auth::attempt($userdata,$remember))
             {
+                //return redirect()->route('dashboard');
                 return redirect()->route('dashboard')
                     ->with('project',Auth::user()->projects->first()->project_id);
             }else{                
@@ -139,7 +257,8 @@ class AuthController extends Controller
     {
         return view('default.register');
     }
-    /**
+
+     /**
      * Create a new user.
      *
      * @return error
@@ -183,7 +302,7 @@ class AuthController extends Controller
                     ->withErrors("An error occured.");
             }
         }
-    }   //future improvements: use out-of-the-box authentication
+    }
     /**
      * Create a new authentication controller instance.
      *
