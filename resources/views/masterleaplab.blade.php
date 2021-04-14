@@ -1,5 +1,6 @@
 <html> 
   <head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>DOM Visualizer - Leap</title>
     <!--Local-->
     <!--script type = "text/javascript" src = "{{ URL::asset('js/jquery-2.1.1.min.js') }}"/></script-->
