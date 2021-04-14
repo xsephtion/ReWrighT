@@ -1,0 +1,1 @@
+web: ReWright-dev/vendor/bin/heroku-php-nginx public/
