@@ -19,7 +19,7 @@ use App\discussion_vote;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class UserController extends Controller
+class userController extends Controller
 {
      /**
      * Redirect to route Path after login
