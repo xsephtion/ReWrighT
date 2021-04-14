@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "laravelcollective/html": "^5.2",
         "intervention/image": "dev-master",
-        "nullpunkt/lz-string-php": "^1.2"
+        "nullpunkt/lz-string-php": "^1.2",
+        "jakub-onderka/php-console-highlighter": "^0.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
