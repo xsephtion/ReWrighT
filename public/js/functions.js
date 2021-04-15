@@ -233,6 +233,7 @@ function launchGenContent(disc_id){
         url: 'discussion',
         type:"POST",
         data: data,
+		dataType: "jsonp",
         success:function(data){
 			var artcle = {profile:'',first_name:'',last_name:'',disc_id:'',disc_title:'',disc_text:'',disc_image:'',disc_priority:'',project_name:'',updated_at:'',read:'',seen:''};
 				artcle.profile 		= data.article.profile;
@@ -268,6 +269,7 @@ function genContentComments(disc_id){
         url: '/discussion/comments',
         type:"POST",
         data: data,
+		dataType: "jsonp",
         success:function(data){
         		var comments = [];
 
@@ -328,6 +330,7 @@ function commentsRefresh(){
 			url: url,
 			data: data,
 			type: "POST",
+			dataType: "jsonp",
 			success:function(data){
 				if(data.cnt != $('#lsComments ul li').length){
 					genContentComments(displayed_id);
@@ -357,6 +360,7 @@ function notifsNextPage(pageNo){
 		url: url,
 		data: data,
 		type: "POST",
+		dataType: "jsonp",
 		success:function(data){
 			for(var i=0;i< data.discussions.length;i++){
 				var discussion = {profile:'',first_name:'',last_name:'',disc_id:'',disc_title:'',disc_text:''};
@@ -406,6 +410,7 @@ function notifsRefresh(){
 		url: url,
 		data: data,
 		type: "POST",
+		dataType: "jsonp",
 		success:function(data){
 			if(data.cnt > 0 && data.cnt != $('#modal2 div ul li').length){
 				notifsNextPage(-1);
@@ -427,8 +432,9 @@ function vote(id,type){
 
 	$.ajax({
         url: '/discussion/upvotes',
-        type:"POST",
         data: data,
+        type:"POST",
+ 		dataType: "jsonp",
         success:function(data){
 			var u = $('#upc'+id);
 			u.empty();
@@ -453,8 +459,9 @@ function getProjects(){
 	};
 	$.ajax({
 		url: 'project/getProjects',
+		data: data,
 		type:"POST",
-    	data: data,
+		dataType: "jsonp",
     	success:function(data){
     		var ul = $('#projects ul');
     		for(var i=0;i<data.projects.length;i++){
@@ -471,22 +478,7 @@ function getProjects(){
     	}
 	});
 }
-$('.joinProj').on('click',function(){
-	event.preventDefault();
-	var data = {
-		token: $(this).data('token')
-	}
-	$.ajax({
-		url:$(this).attr('href'),
-		type:"POST",
-		data: data,
-		success:function(data){
-		},
-		error:function(data){
 
-		}
-	});
-});
 
 function submitActivationForm(formId){
 	var div = formId + "_div";
@@ -505,6 +497,7 @@ function submitActivationForm(formId){
 		mimeType: 'multipart/form-data',
         type:"POST",
         data: dataform,
+		dataType: "jsonp",
         
         success:function(data){
         	var status = JSON.parse(data).status;
@@ -567,6 +560,7 @@ function getExerDataList(){
 		contentType: false,
 		type:"POST",
     	data: dataform,
+		dataType: "jsonp",
     	success:function(data){
     		var status = data.success;
         	var msg = data.message;
@@ -625,6 +619,7 @@ function getPatientList(){
 		contentType: false,
 		type:"POST",
     	data: dataform,
+		dataType: "jsonp",
     	success:function(data){
     		var status = data.success;
         	var msg = data.message;
@@ -715,6 +710,7 @@ function submitExer(id){
 			mimeType: 'multipart/form-data',
             type:"POST",
             data: dataform,
+			dataType: "jsonp",
             
             success:function(data){
             	var status = JSON.parse(data).status;
@@ -763,6 +759,7 @@ $('.boards').on('click',function(){
             url: 'discussionBoard',
             type:"POST",
             data: data,
+		dataType: "jsonp",
             success:function(data){
 				for(var i=0;i< data.discussions.length;i++){
 					var discussion = {profile:'',first_name:'',last_name:'',disc_id:'',disc_title:'',disc_text:''};
@@ -822,6 +819,7 @@ $('.boards').on('click',function(){
             url: 'taskBoard',
             type:"POST",
             data: data,
+			dataType: "jsonp",
             success:function(data){
 
             	if(data.status == "fail"){
@@ -1045,6 +1043,7 @@ $(document).ready(function(){
 	            url: 'discussionBoard',
 	            type:"POST",
 	            data: data,
+				dataType: "jsonp",
 	            success:function(data){
 	            	if(data.discussions.length > 0){
 		            	for(var i=0;i< data.discussions.length;i++){
