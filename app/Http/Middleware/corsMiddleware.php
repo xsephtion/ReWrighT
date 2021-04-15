@@ -6,6 +6,10 @@ use Closure;
 
 class corsMiddleware
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     /**
     * @param $request
     * @param Closure $next
