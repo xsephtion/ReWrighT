@@ -83,11 +83,11 @@ Route::group(['middleware' => ['web']], function () {
 		Route::post('/post/discussion/comment', ['as' => 'postDiscussionComment', 'uses' =>'discussionController@postDiscussionComment']);	//ajax request
 		Route::get('/post/discussion/comment', 'discussionController@postDiscussionComment');
 		//refresh routes
-		Route::post('/post/discussion/comment/cnt', ['as' => 'postDiscussionCommentCnt', 'uses' =>'discussionController@postDiscussionCommentCnt']);	//ajax request
-		Route::get('/post/discussion/comment/cnt', 'discussionController@postDiscussionCommentCnt');
+		Route::post('/post/discussion/comment/cnt', ['as' => 'postDiscussionCommentCnt', 'uses' =>'discussionController@postDiscussionCommentCnt'])->middleware(['cors']);	//ajax request
+		Route::get('/post/discussion/comment/cnt', 'discussionController@postDiscussionCommentCnt')->middleware(['cors']);
 
-		Route::post('/post/discussion/notifs/cnt', ['as' => 'postDiscussionNotifsCnt', 'uses' =>'discussionController@postDiscussionNotifsCnt']);	//ajax request
-		Route::get('/post/discussion/notifs/cnt', 'discussionController@postDiscussionNotifsCnt');
+		Route::post('/post/discussion/notifs/cnt', ['as' => 'postDiscussionNotifsCnt', 'uses' =>'discussionController@postDiscussionNotifsCnt'])->middleware(['cors']);	//ajax request
+		Route::get('/post/discussion/notifs/cnt', 'discussionController@postDiscussionNotifsCnt')->middleware(['cors']);
 	//Tasks	
 		Route::post('/taskBoard', ['as' => 'taskBoard', 'uses' =>'taskController@getTasks']);	//ajax request
 		Route::get('/taskBoard', 'taskController@getTasks');	//ajax request
