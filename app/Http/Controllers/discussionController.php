@@ -22,6 +22,22 @@ use App\Http\Controllers\Controller;
 
 class discussionController extends Controller
 {
+    protected $user;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+
+            $this->user = Auth::user();
+
+            return $next($request);
+        });
+    }
     /**
      *  Get discussions
      *

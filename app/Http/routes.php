@@ -24,9 +24,9 @@
 */
 
 Route::group(['middleware' => ['web']], function () {
-	Route::auth();
+	//Route::auth();
 	Route::get('/', 'indexController@index');
-	Route::group(['middleware' => 'cors'], function(){
+	//Route::group(['middleware' => 'cors'], function(){
 												//Index Page
 	//Login routes
 	    Route::get('auth/admin/login','Auth\AuthController@showAdminLoginForm');
@@ -146,6 +146,6 @@ Route::group(['middleware' => ['web']], function () {
 
 		Route::post('/post/note', ['as' => 'postNote', 'uses' =>'notesController@postNote']);	//ajax 
 		Route::get('/post/note', 'notesController@postTask');
-	});
+	//});
     
 }); 
