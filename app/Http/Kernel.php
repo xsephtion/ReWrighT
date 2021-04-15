@@ -51,6 +51,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'MustBeLoggedIn'=>\App\Http\Middleware\MustBeLoggedIn::class,
         'AlreadyLoggedIn'=>\App\Http\Middleware\AlreadyLoggedIn::class,
-        'cors' => \App\Http\Middleware\CORS::class,
+        'cors' => \App\Http\Middleware\corsMiddleware::class,
     ];
 }
