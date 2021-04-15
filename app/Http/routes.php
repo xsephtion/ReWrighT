@@ -31,9 +31,9 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('auth/login','Auth\AuthController@showLoginForm');
 	Route::post('auth/login', ['as' => 'login', 'uses'=> 'Auth\AuthController@login']);
 //Profile routes
-	Route::post('auth/profile/save/', ['as' => 'postEditProfile', 'uses' =>'UserController@saveEditUserProfile']);	//ajax request
-	Route::get('auth/profile/edit/{code}','UserController@editUserProfile1');
-	Route::post('auth/profile/edit/{code}', ['as' => 'editProfile', 'uses'=> 'UserController@editUserProfile1']);
+	Route::post('auth/profile/save/', ['as' => 'postEditProfile', 'uses' =>'userController@saveEditUserProfile']);	//ajax request
+	Route::get('auth/profile/edit/{code}','userController@editUserProfile1');
+	Route::post('auth/profile/edit/{code}', ['as' => 'editProfile', 'uses'=> 'userController@editUserProfile1']);
 	
 	Route::post('auth/search/patient', ['as' => 'getPatientSrch', 'uses' => 'userController@getPatientSrch']);
 	Route::get('auth/search/patient', 'userController@getPatientSrch');
@@ -54,8 +54,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/admin/auth/updatepgcount', ['as' => 'pgUpdateCount', 'uses' =>'adminController@postUpdatePGCount']);	//ajax request
 	Route::get('/admin/auth/updatepgcount', 'adminController@postUpdatePGCount');
 //logout routes
-	Route::get('/admin/logout',['as' => 'logoutAdmin', 'uses'=>'UserController@getLogoutAdmin']);	
-	Route::get('/logout',['as' => 'logout', 'uses'=>'UserController@getLogout']);				// Logout route
+	Route::get('/admin/logout',['as' => 'logoutAdmin', 'uses'=>'userController@getLogoutAdmin']);	
+	Route::get('/logout',['as' => 'logout', 'uses'=>'userController@getLogout']);				// Logout route
 // Dashboard Routes
 	Route::get('/admin/dashboard', ['as'=>'dashboardAdmin','uses'=>'userController@dashboardAdmin']);
 	Route::get('/dashboard/', ['as'=>'dashboard','uses'=>'userController@dashboard']);

@@ -28,7 +28,7 @@ class userController extends Controller
      */
     protected $redirectTo = 'dashboard';
     /*
-	 * Create a UserController Instance
+	 * Create a userController Instance
 	 *
 	 *
 	 */
