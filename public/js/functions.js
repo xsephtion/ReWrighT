@@ -357,6 +357,7 @@ function notifsNextPage(pageNo){
 		url: url,
 		data: data,
 		type: "POST",
+		dataType: "jsonp"
 		success:function(data){
 			for(var i=0;i< data.discussions.length;i++){
 				var discussion = {profile:'',first_name:'',last_name:'',disc_id:'',disc_title:'',disc_text:''};
@@ -405,7 +406,7 @@ function notifsRefresh(){
 	$.ajax({
 		url: url,
 		data: data,
-		type: "GET",
+		type: "POST",
 		success:function(data){
 			if(data.cnt > 0 && data.cnt != $('#modal2 div ul li').length){
 				notifsNextPage(-1);
