@@ -357,7 +357,7 @@ function notifsNextPage(pageNo){
 		url: url,
 		data: data,
 		type: "POST",
-		dataType: "jsonp"
+		dataType: "jsonp",
 		success:function(data){
 			for(var i=0;i< data.discussions.length;i++){
 				var discussion = {profile:'',first_name:'',last_name:'',disc_id:'',disc_title:'',disc_text:''};
