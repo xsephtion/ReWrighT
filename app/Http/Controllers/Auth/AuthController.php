@@ -111,7 +111,7 @@ class AuthController extends Controller
                         ->withInput($request->except('password'));
                     }else{
                         $db = DB::table('users')->select('user_types')->where('email','=',$userdata['email'])->first();
-                        var_dump($db);
+                        
                         $err_type = -1;
                         foreach($db as $acc){
                             if($acc->user_types != '0'){

@@ -29,7 +29,10 @@ class CreateProjectsTable extends Migration
      */
     public function down()
     {
-        /*
+        
+        Schema::drop('notes');
+        Schema::drop('task_exer_data');
+        Schema::drop('exer_data');
         Schema::drop('task_assignment');
         Schema::drop('tag_info');
         Schema::drop('task_tag');
@@ -40,6 +43,6 @@ class CreateProjectsTable extends Migration
         Schema::drop('discussions_board');
         Schema::drop('developers');
         Schema::drop('projects');
-        */
+        
     }
 }
