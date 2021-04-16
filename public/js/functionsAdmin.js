@@ -34,7 +34,7 @@ function submitActivationForm(formId){
     formId = '#' + formId;
     var dataform =  new FormData();
 
-    dataform.append('_token',$(formId + ' [name=_token]')[0].value);
+    //dataform.append('_token',$(formId + ' [name=_token]')[0].value);
     dataform.append('email',$(formId+' [name=email]')[0].value);
     
     var error;
@@ -94,7 +94,7 @@ function submitRegForm(){
 	var formId = '#f_reg';
 	var dataform =  new FormData();
 
-	dataform.append('_token',$(formId + ' [name=_token]')[0].value);
+	//dataform.append('_token',$(formId + ' [name=_token]')[0].value);
 	dataform.append('email',$(formId+' [name=email]')[0].value);
 	dataform.append('user_types',$(formId+' [name=user_types]')[0].value);
 	
@@ -143,7 +143,7 @@ function submitActivationForm(){
 	var formId = '#f_activation';
 	var dataform =  new FormData();
 
-	dataform.append('_token',$(formId + ' [name=_token]')[0].value);
+	//dataform.append('_token',$(formId + ' [name=_token]')[0].value);
 	dataform.append('email',$(formId+' [name=email]')[0].value);
 	
 	var error;
@@ -206,7 +206,7 @@ function searchPatientGroup(){
     var formId = '#f_getPatientGroup';
     var dataform =  new FormData();
 
-    dataform.append('_token',$(formId + ' [name=_token]')[0].value);
+    //dataform.append('_token',$(formId + ' [name=_token]')[0].value);
     dataform.append('search',$(formId+' [name=search]')[0].value);
     
     var error;
@@ -302,7 +302,7 @@ $('button .upcount').click(function(){
 function updatePGSize(id,type){
     var dataform =  new FormData();
 
-    dataform.append('_token',$('#f_getPatientGroup [name=_token]')[0].value);
+    //dataform.append('_token',$('#f_getPatientGroup [name=_token]')[0].value);
     dataform.append('id',id);
     dataform.append('type',type);
 

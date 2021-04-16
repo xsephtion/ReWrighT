@@ -225,7 +225,6 @@ function launchGenContent(disc_id){
 	}
 	
 	var data = {
-		_token:$('#'+board).data('token'),
         disc_id: disc_id,
     }
 
@@ -259,7 +258,6 @@ function launchGenContent(disc_id){
 function genContentComments(disc_id){
 	getLoading('lsComments');
 	var data = {
-		_token:$('#'+board).data('token'),
         disc_id: disc_id,
     }
 
@@ -317,7 +315,6 @@ function updateGenComments(comments){
 function commentsRefresh(){
 	if(board === "db_disc_board"){
 		var data = {
-			 _token:$('#'+board).data('token'),
             id: displayed_id
 		};
 		$.ajax({
@@ -342,7 +339,6 @@ function notifsNextPage(pageNo){
 		url = "discussionBoard";
 	
 		var data = {
-				 _token:$('#'+board).data('token'),
 	            project: project_id,
 	            page: pageNo+1,
 	            all: false
@@ -391,7 +387,6 @@ function notifsRefresh(){
 		url = "post/discussion/notifs/cnt";
 	}
 	var data = {
-			 _token:$('#'+board).data('token'),
             project: project_id,
             all: false
 
@@ -413,7 +408,6 @@ function notifsRefresh(){
 }
 function vote(id,type){
 	var data = {
-		_token:$('#'+board).data('token'),
        id: id,
        type:type,
     }
@@ -441,7 +435,6 @@ function getProjects(){
 	var ul = $('#projects ul');
 	
 	var data = {
-		_token:$('#'+board).data('token'),
 	};
 	$.ajax({
 		url: 'project/getProjects',
@@ -470,7 +463,7 @@ function submitActivationForm(formId){
 	var cur = document.getElementById(div);
 	var dataform =  new FormData();
 
-	dataform.append('_token',$(formId + ' [name=_token]')[0].value);
+	//dataform.append('_token',$(formId + ' [name=_token]')[0].value);
 	dataform.append('email',$(formId+' [name=email]')[0].value);
 	
 	var error;
@@ -534,7 +527,7 @@ function getExerDataList(){
 	
 	var dataform =  new FormData();
 
-	dataform.append('_token',$('#postExerciseDataList [name=_token]')[0].value);
+	//dataform.append('_token',$('#postExerciseDataList [name=_token]')[0].value);
 	$.ajax({
 		url: '/post/exerdata/list',
         processData: false,
@@ -590,7 +583,7 @@ function getPatientList(){
 	
 	var dataform =  new FormData();
 
-	dataform.append('_token',$('#postTask [name=_token]')[0].value);
+	//dataform.append('_token',$('#postTask [name=_token]')[0].value);
 	$.ajax({
 		url: '/post/patient/list',
         processData: false,
@@ -671,7 +664,7 @@ function submitExer(id){
 
     var dataform =  new FormData();
 
-	dataform.append('_token',$('#db_task_board').data('token'));
+	//dataform.append('_token',$('#db_task_board').data('token'));
 	dataform.append('id',id);
 	if($('#leapData'+id).val() == undefined){
 		var toastContent = "<span> Leap File Required. </span>";
@@ -722,7 +715,6 @@ $('.boards').on('click',function(){
 		$('#genContentTask').hide();
 		$('#genContent').show();
 		var data = {
-            _token:$(this).data('token'),
             project: project_id,
             page: notifPage,
             all: false
@@ -781,7 +773,6 @@ $('.boards').on('click',function(){
 		getLoading('genContentTask');
 
 		var data = {
-            _token:$(this).data('token'),
             project: project_id,
             all: true
         }
@@ -861,7 +852,6 @@ $('a').on('click', function() {
 				var dataform =  new FormData();
 				
 				dataform = colateText('addl_post_disc');
-				dataform.append('_token',$(formId+' [name=_token]')[0].value);
 				dataform.append('priority',$(formId+' [name=pd_priority]')[0].value);
 				dataform.append('project_id',$(formId+' [name=pd_project]')[0].value);
 				dataform.append('title',$(formId+' [name=title]')[0].value);
@@ -878,7 +868,6 @@ $('a').on('click', function() {
 				var dataform =  new FormData();
 
 				dataform = colateText('addl_post_task');
-				dataform.append('_token',$(formId+' [name=_token]')[0].value);
 				dataform.append('project_id',$(formId+' [name=pd_project]')[0].value);
 				dataform.append('title',$(formId+' [name=title]')[0].value);
 				dataform.append('frequency',$('#freq').val());
@@ -894,7 +883,6 @@ $('a').on('click', function() {
 				var formId = '#postExerciseData';
 				var dataform =  new FormData();
 
-				dataform.append('_token',$(formId+' [name=_token]')[0].value);
 				dataform.append('title',$(formId+' [name=title]')[0].value);
 				dataform.append('leapData',$(formId+' [name=leapData]')[0].files[0]);
 								
@@ -913,7 +901,6 @@ $('a').on('click', function() {
 				var dataform =  new FormData();
 				
 				dataform = colateText('addl_post_comment');
-				dataform.append('_token',$(formId+' [name=_token]')[0].value);
 				dataform.append('discussion_id',displayed_id);
 				
 				if(ajaxSubmitPostings(formId,dataform)){
@@ -1003,7 +990,6 @@ $(document).ready(function(){
 		$('#modal2 div ul li').ready(function(){
 			$('html,body').animate({ scrollTop: 0 }, 'slow');
 		    var data = {
-	            _token:$('#'+board).data('token'),
 	            project: project_id,
 	            page: notifPage,
 	            all: true

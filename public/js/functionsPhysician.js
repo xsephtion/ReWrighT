@@ -4,7 +4,7 @@ function searchPatient(){
     var formId = '#f_getPatientSrch';
     var dataform =  new FormData();
 
-    dataform.append('_token',$(formId + ' [name=_token]')[0].value);
+    //dataform.append('_token',$(formId + ' [name=_token]')[0].value);
     dataform.append('search',$(formId+' [name=search]')[0].value);
     
     var error;
@@ -118,7 +118,7 @@ function searchPatient(){
 function loadNotes(id){
 
     var data = {
-        _token:$('#f_getPatientSrch [name=_token]')[0].value,
+        
         id:id
     }
 
@@ -189,7 +189,6 @@ function loadTasks(id){
     getLoading('patientResTask'+id);
 
     var data = {
-        _token:$('#f_getPatientSrch [name=_token]')[0].value,
         project: project_id,
         patient_id: id,
         all: false
@@ -252,7 +251,6 @@ function loadTasks(id){
 function loadDiscs(id){
 
     var data = {
-       _token:$('#f_getPatientSrch [name=_token]')[0].value,
         project: project_id,
         patient_id: id,
         all: false

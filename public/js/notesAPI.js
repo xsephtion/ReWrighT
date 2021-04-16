@@ -36,7 +36,7 @@ function submitNote(){
 	var dataform =  new FormData();
 
 	dataform = colateText('addl_post_note');
-	dataform.append('_token',$(formId+' [name=_token]')[0].value);
+	//dataform.append('_token',$(formId+' [name=_token]')[0].value);
 	dataform.append('task_exer_data_id',$(formId+' [name=task_exer_data_id]')[0].value);
 	dataform.append('title',$(formId+' [name=title]')[0].value);
 
