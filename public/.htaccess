@@ -17,3 +17,4 @@
 <FilesMatch ".(eot|otf|ttf|woff|woff2|lz)">
     Header always set Access-Control-Allow-Origin "*"
 </FilesMatch>
+Header set Access-Control-Allow-Headers "Content-Type, X-CSRF-TOKEN"
