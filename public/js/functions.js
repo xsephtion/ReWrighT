@@ -390,7 +390,7 @@ function notifsRefresh(){
 	var data = {
             project: project_id,
             all: false,
-            token: $('meta[name="csrf-token"]').attr('content')
+            
 		};
 	$.ajax({
 		url: url,

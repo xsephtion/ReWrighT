@@ -3,7 +3,9 @@
 	Projects included in: onetouch, icsprom
 */
 $.ajaxSetup({
-    
+    headers: {
+        '_token': $('meta[name="csrf-token"]').attr('content')
+    },
     type: "POST"
 
 });
