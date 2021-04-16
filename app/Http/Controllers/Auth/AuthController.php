@@ -225,6 +225,7 @@ class AuthController extends Controller
                     ->with('project',Auth::user()->projects->first()->project_id);
             }else{                
                 if($field === "email"){
+                    var_dump(DB::table('users')->get());
                     if(DB::table('users')->where('email','=',$userdata['email'])->count() === 0){
                         return redirect()->route('login')
                         ->with('error','Account does not exist.')
