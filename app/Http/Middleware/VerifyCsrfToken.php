@@ -13,6 +13,5 @@ class VerifyCsrfToken extends BaseVerifier
      */
     protected $except = [
         //
-        "/post/discussion/notifs/cnt"
     ];
 }

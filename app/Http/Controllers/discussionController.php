@@ -478,12 +478,12 @@ class discussionController extends Controller
      *  @return array
      */
     public function postDiscussionNotifsCnt(Request $request){
+        var_dump($request);
         if($request->ajax()){
             $input = $request->only([
                 'project_id',
                 'all'
                 ]);
-            var_dump(Auth::user());
             $count = discussion_notif::leftjoin('discussions_board','discussion_notifs.discussion_id','=','discussions_board.id')
                     ->where('discussion_notifs.user_id','=',Auth::user()->id)
                     ->where('discussion_notifs.seen','=',false)
