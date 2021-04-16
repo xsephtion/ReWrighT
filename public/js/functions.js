@@ -321,7 +321,7 @@ function commentsRefresh(){
             id: displayed_id
 		};
 		$.ajax({
-			url: "/post/discussion/comment/cnt";,
+			url: "/post/discussion/comment/cnt",
 			data: data,
 			success:function(data){
 				if(data.cnt != $('#lsComments ul li').length){
