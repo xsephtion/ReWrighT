@@ -1,4 +1,4 @@
-var siteUrl = "reWright.test";
+var siteUrl = window.location.hostname;
 // For todays date;
 Date.prototype.today = function () { 
     return ((this.getDate() < 10)?"0":"") + this.getDate() +"/"+(((this.getMonth()+1) < 10)?"0":"") + (this.getMonth()+1) +"/"+ this.getFullYear();
@@ -231,9 +231,7 @@ function launchGenContent(disc_id){
 
 	$.ajax({
         url: 'discussion',
-        type:"POST",
         data: data,
-		dataType: "jsonp",
         success:function(data){
 			var artcle = {profile:'',first_name:'',last_name:'',disc_id:'',disc_title:'',disc_text:'',disc_image:'',disc_priority:'',project_name:'',updated_at:'',read:'',seen:''};
 				artcle.profile 		= data.article.profile;
@@ -267,9 +265,7 @@ function genContentComments(disc_id){
 
 	$.ajax({
         url: '/discussion/comments',
-        type:"POST",
         data: data,
-		dataType: "jsonp",
         success:function(data){
         		var comments = [];
 
@@ -319,18 +315,14 @@ function updateGenComments(comments){
 
 
 function commentsRefresh(){
-	var url = "";
 	if(board === "db_disc_board"){
-		url = "/post/discussion/comment/cnt";
 		var data = {
 			 _token:$('#'+board).data('token'),
             id: displayed_id
 		};
 		$.ajax({
-			url: url,
+			url: "/post/discussion/comment/cnt";,
 			data: data,
-			type: "POST",
-			dataType: "jsonp",
 			success:function(data){
 				if(data.cnt != $('#lsComments ul li').length){
 					genContentComments(displayed_id);
@@ -341,59 +333,57 @@ function commentsRefresh(){
 				setTimeout(commentsRefresh, 20000);
 			}
 		});
-	}
-	
+	}	
 }
 function notifsNextPage(pageNo){
 	var url = "";
 	var prev = discussions.length;
 	if(board === "db_disc_board"){
 		url = "discussionBoard";
-	}
-	var data = {
-			 _token:$('#'+board).data('token'),
-            project: project_id,
-            page: pageNo+1,
-            all: false
-		};
-	$.ajax({
-		url: url,
-		data: data,
-		type: "POST",
-		dataType: "jsonp",
-		success:function(data){
-			for(var i=0;i< data.discussions.length;i++){
-				var discussion = {profile:'',first_name:'',last_name:'',disc_id:'',disc_title:'',disc_text:''};
-					discussion.profile = data.discussions[i].profile;
-		    		discussion.first_name = data.discussions[i].first_name;
-		    		discussion.last_name = data.discussions[i].last_name;
-		    		discussion.disc_id = data.discussions[i].discussion_id;
-		    		discussion.disc_title = data.discussions[i].disc_title;
-		    		discussion.disc_text = data.discussions[i].disc_text;
+	
+		var data = {
+				 _token:$('#'+board).data('token'),
+	            project: project_id,
+	            page: pageNo+1,
+	            all: false
+			};
+		$.ajax({
+			url: url,
+			data: data,
+			success:function(data){
+				for(var i=0;i< data.discussions.length;i++){
+					var discussion = {profile:'',first_name:'',last_name:'',disc_id:'',disc_title:'',disc_text:''};
+						discussion.profile = data.discussions[i].profile;
+			    		discussion.first_name = data.discussions[i].first_name;
+			    		discussion.last_name = data.discussions[i].last_name;
+			    		discussion.disc_id = data.discussions[i].discussion_id;
+			    		discussion.disc_title = data.discussions[i].disc_title;
+			    		discussion.disc_text = data.discussions[i].disc_text;
 
-		    	if(discussions.length == 0){
-		    		discussions.push(discussion);
-		    	}else{
-		    		if(function(){
-		    			for(var j=0;j<data.length;j++){
-		    				if(discussion.disc_id == discussions[i].disc_id){
-		    					return false;
-		    				}
-		    			}
-		    			return true;
-		    		}){
-			    		discussions.unshift(discussion); //add items at the beginning of array
+			    	if(discussions.length == 0){
+			    		discussions.push(discussion);
+			    	}else{
+			    		if(function(){
+			    			for(var j=0;j<data.length;j++){
+			    				if(discussion.disc_id == discussions[i].disc_id){
+			    					return false;
+			    				}
+			    			}
+			    			return true;
+			    		}){
+				    		discussions.unshift(discussion); //add items at the beginning of array
+				    	}
 			    	}
-		    	}
-			}
-			if(prev < discussions.length){
-				updateModal2(board,'modal2');
-			}
-			
-		},error:function(data){
+				}
+				if(prev < discussions.length){
+					updateModal2(board,'modal2');
+				}
+				
+			},error:function(data){
 
-		}
-	});
+			}
+		});
+	}
 }
 function notifsRefresh(){
 	var url = "";
@@ -409,8 +399,6 @@ function notifsRefresh(){
 	$.ajax({
 		url: url,
 		data: data,
-		type: "POST",
-		dataType: "jsonp",
 		success:function(data){
 			if(data.cnt > 0 && data.cnt != $('#modal2 div ul li').length){
 				notifsNextPage(-1);
@@ -433,8 +421,6 @@ function vote(id,type){
 	$.ajax({
         url: '/discussion/upvotes',
         data: data,
-        type:"POST",
- 		dataType: "jsonp",
         success:function(data){
 			var u = $('#upc'+id);
 			u.empty();
@@ -460,8 +446,6 @@ function getProjects(){
 	$.ajax({
 		url: 'project/getProjects',
 		data: data,
-		type:"POST",
-		dataType: "jsonp",
     	success:function(data){
     		var ul = $('#projects ul');
     		for(var i=0;i<data.projects.length;i++){
@@ -495,9 +479,7 @@ function submitActivationForm(formId){
         processData: false,
 		contentType: false,
 		mimeType: 'multipart/form-data',
-        type:"POST",
-        data: dataform,
-		dataType: "jsonp",
+       	data: dataform,
         
         success:function(data){
         	var status = JSON.parse(data).status;
@@ -555,12 +537,9 @@ function getExerDataList(){
 	dataform.append('_token',$('#postExerciseDataList [name=_token]')[0].value);
 	$.ajax({
 		url: '/post/exerdata/list',
-
         processData: false,
 		contentType: false,
-		type:"POST",
     	data: dataform,
-		dataType: "jsonp",
     	success:function(data){
     		var status = data.success;
         	var msg = data.message;
@@ -614,12 +593,9 @@ function getPatientList(){
 	dataform.append('_token',$('#postTask [name=_token]')[0].value);
 	$.ajax({
 		url: '/post/patient/list',
-
         processData: false,
 		contentType: false,
-		type:"POST",
     	data: dataform,
-		dataType: "jsonp",
     	success:function(data){
     		var status = data.success;
         	var msg = data.message;
@@ -708,10 +684,7 @@ function submitExer(id){
             processData: false,
 			contentType: false,
 			mimeType: 'multipart/form-data',
-            type:"POST",
-            data: dataform,
-			dataType: "jsonp",
-            
+            data: dataform,            
             success:function(data){
             	var status = JSON.parse(data).status;
             	var msg = JSON.parse(data).message;
@@ -757,9 +730,7 @@ $('.boards').on('click',function(){
 
 		$.ajax({
             url: 'discussionBoard',
-            type:"POST",
             data: data,
-		dataType: "jsonp",
             success:function(data){
 				for(var i=0;i< data.discussions.length;i++){
 					var discussion = {profile:'',first_name:'',last_name:'',disc_id:'',disc_title:'',disc_text:''};
@@ -817,9 +788,7 @@ $('.boards').on('click',function(){
 
 		$.ajax({
             url: 'taskBoard',
-            type:"POST",
             data: data,
-			dataType: "jsonp",
             success:function(data){
 
             	if(data.status == "fail"){
@@ -1041,9 +1010,7 @@ $(document).ready(function(){
 		        }
 			$.ajax({
 	            url: 'discussionBoard',
-	            type:"POST",
 	            data: data,
-				dataType: "jsonp",
 	            success:function(data){
 	            	if(data.discussions.length > 0){
 		            	for(var i=0;i< data.discussions.length;i++){

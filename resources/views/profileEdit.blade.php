@@ -2,6 +2,7 @@
 <html>
     <head>
     	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    	<meta name="csrf-token" content="{{ csrf_token() }}" />
         <title>ReWrighT</title>
         <!--Font/Icon-->
         <!--link rel = "stylesheet" type = "text/css" href="http://fonts.googleapis.com/icon?family=Material+Icons"/-->

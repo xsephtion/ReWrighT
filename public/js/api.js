@@ -2,6 +2,14 @@
 	Author: Gabriel Luis G. Borjal
 	Projects included in: onetouch, icsprom
 */
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type: "POST",
+    dataType: "jsonp"
+
+});
 function addNode(parent,type,id,name,classTxt,value,inpType,textNode){
 	//var parent = document.getElementById(parentId);
 	var tmp = document.createElement(type);
