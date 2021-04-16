@@ -382,6 +382,7 @@ function notifsNextPage(pageNo){
 	}
 }
 function notifsRefresh(){
+	
 	var url = "";
 	if(board === "db_disc_board"){
 		url = "post/discussion/notifs/cnt";
