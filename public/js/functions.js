@@ -389,8 +389,7 @@ function notifsRefresh(){
 	}
 	var data = {
             project: project_id,
-            all: false,
-            _token: "{{ csrf_token() }}"
+            all: false
 		};
 	$.ajax({
 		url: url,
