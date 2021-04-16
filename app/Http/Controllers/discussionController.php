@@ -478,7 +478,7 @@ class discussionController extends Controller
      *  @return array
      */
     public function postDiscussionNotifsCnt(Request $request){
-        var_dump($request);
+       
         if($request->ajax()){
             $input = $request->only([
                 'project_id',
