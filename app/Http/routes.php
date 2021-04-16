@@ -23,7 +23,7 @@
 |
 */
 
-Route::group(['middleware' => ['web','cors']], function () {
+Route::group(['middleware' => ['web']], function () {
     Route::get('/', 'indexController@index');										//Index Page
 //Login routes
     Route::get('auth/admin/login','Auth\AuthController@showAdminLoginForm');
