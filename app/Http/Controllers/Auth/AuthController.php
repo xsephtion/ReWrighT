@@ -111,7 +111,7 @@ class AuthController extends Controller
                         ->withInput($request->except('password'));
                     }else{
                         $db = DB::table('users')->select('user_types')->where('email','=',$userdata['email'])->first();
-                        
+                        var_dump($db);
                         $err_type = -1;
                         foreach($db as $acc){
                             if($acc->user_types != '0'){
@@ -225,15 +225,14 @@ class AuthController extends Controller
                     ->with('project',Auth::user()->projects->first()->project_id);
             }else{                
                 if($field === "email"){
-                    var_dump(DB::table('users')->get());
-                    /*if(DB::table('users')->where('email','=',$userdata['email'])->count() === 0){
+                    if(DB::table('users')->where('email','=',$userdata['email'])->count() === 0){
                         return redirect()->route('login')
                         ->with('error','Account does not exist.')
                         ->withInput($request->except('password'));
                     }
                     return redirect()->route('login')
                         ->with('error','E-mail and Password does not match.')
-                        ->withInput($request->except('password'));*/
+                        ->withInput($request->except('password'));
                 }else{
                     if(DB::table('users')->where('username','=',$userdata['username'])->count() === 0){
                         return redirect()->route('login')
